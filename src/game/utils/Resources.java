@@ -11,7 +11,7 @@ import java.net.URL;
 
 
 public class Resources {
-    public static Color COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_BLACK;
+    public static Color COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_BLACK, COLOR_WHITE;
 
     public static Image loadingImg, menuPlayImg, menuExitImg;
 
@@ -31,6 +31,7 @@ public class Resources {
         COLOR_BLUE = new Color(16, 67, 214);
         COLOR_PURPLE = new Color(164, 60, 169);
         COLOR_BLACK = new Color(0,0,0);
+        COLOR_WHITE = new Color(255, 255, 255);
     }
 
     private static AudioClip loadSound(String filename) {

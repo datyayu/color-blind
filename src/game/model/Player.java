@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Player {
     private static final float GRAVITY_ACCEL = 1800;
-private static final int JUMP_VELOCITY = -500;
+private static final int JUMP_VELOCITY = -600;
     private static final int MOVEMENT_STEP = 200;
 
     private int x;
@@ -102,7 +102,7 @@ private static final int JUMP_VELOCITY = -500;
 
                 case BLOCK_BOTTOM:
                     Rectangle entRect = entity.getRect();
-                    velY = -velY;
+                    velY = 0;
                     y = (int) (entRect.getY() + entRect.getHeight());
                     break;
 

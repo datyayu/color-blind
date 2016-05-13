@@ -20,6 +20,7 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setBounds(500, 100, GAME_WIDTH, GAME_HEIGHT);
         frame.setVisible(true);
     }
 }

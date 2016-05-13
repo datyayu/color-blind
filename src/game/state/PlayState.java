@@ -1,6 +1,7 @@
 package game.state;
 
 import game.main.Main;
+import game.model.HUD;
 import game.model.Player;
 import game.model.IEntity;
 import game.utils.Resources;
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 public abstract  class PlayState extends State {
     public Player player;
     public ArrayList<IEntity> entities;
+    public HUD hud;
+    public int activeColor;
 
     private final int PLAYER_HEIGHT = 50;
     private final int PLAYER_WIDTH = 30;
     private final int GROUND_HEIGHT = 50;
+
 
     @Override
     public void init() {
@@ -27,6 +31,8 @@ public abstract  class PlayState extends State {
 
     @Override
     public void update(float delta) {
+        hud.update(activeColor);
+        player.setColor(hud.getActiveColor());
         player.update(delta, entities);
     }
 
@@ -37,6 +43,8 @@ public abstract  class PlayState extends State {
 
         entities.forEach(entity -> entity.render(g));
         player.render(g);
+
+        hud.render(g);
     }
 
     @Override
@@ -57,19 +65,19 @@ public abstract  class PlayState extends State {
                 break;
 
             case KeyEvent.VK_1:
-                player.setColor(Resources.COLOR_GREEN);
+                activeColor = 0;
                 break;
 
             case KeyEvent.VK_2:
-                player.setColor(Resources.COLOR_YELLOW);
+                activeColor = 1;
                 break;
 
             case KeyEvent.VK_3:
-                player.setColor(Resources.COLOR_BLUE);
+                activeColor = 2;
                 break;
 
             case KeyEvent.VK_4:
-                player.setColor(Resources.COLOR_ORANGE);
+                activeColor = 3;
                 break;
 
             default:
