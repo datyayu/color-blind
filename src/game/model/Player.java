@@ -2,14 +2,17 @@ package game.model;
 
 
 import game.main.Main;
+import game.utils.CollisionType;
+import game.utils.IEntity;
 import game.utils.Resources;
 
 import java.awt.*;
+import java.util.ArrayList;
 
-public class Player implements IEntity {
+public class Player {
     private static final float GRAVITY_ACCEL = 1800;
     private static final int JUMP_VELOCITY = -600;
-    private static final int MOVEMENT_STEP = 400;
+    private static final int MOVEMENT_STEP = 200;
 
     private int x;
     private int y;
@@ -18,8 +21,12 @@ public class Player implements IEntity {
     private int velX = 0;
     private int velY = 0;
 
+    private boolean isGrounded = true;
+    private boolean canJump = true;
+
     private Rectangle ground;
     private Rectangle rect;
+    private Color color;
 
 
     public Player(int x, int y, int width, int height) {
@@ -27,36 +34,43 @@ public class Player implements IEntity {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = Resources.COLOR_BLUE;
 
         rect = new Rectangle();
-        ground = new Rectangle(0, Main.GAME_HEIGHT - 51, Main.GAME_WIDTH, 51);
 
         updateRects();
     }
 
-    @Override
-    public void update(float delta) {
-        if (!isGrounded()) {
+
+    public void update(float delta, ArrayList<IEntity> entities) {
+        // Jump
+        if (!isGrounded) {
             velY += GRAVITY_ACCEL * delta;
         } else {
-            y = Main.GAME_HEIGHT - (height + 50);
             velY = 0;
         }
 
+
         y += velY * delta;
         x += velX * delta;
+
+        isGrounded = false;
+        checkCollisions(entities);
         updateRects();
     }
 
-    @Override
-    public void render(Graphics g) {
-        g.setColor(Resources.COLOR_BLACK);
-        g.fillRect((int) ground.getX(), (int) ground.getY(), (int) ground.getWidth(), (int) ground.getHeight());
 
+    public void render(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillRect((int) rect.getX(), (int) rect.getY(), (int) rect.getHeight(), (int) rect.getHeight());
+        g.fillRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
         g.setColor(Color.GREEN);
-        g.drawRect((int) rect.getX(), (int) rect.getY(), (int) rect.getHeight(), (int) rect.getHeight());
+        g.drawRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+    }
+
+    public void setColor(Color color) { this.color = color; }
+
+    public Color getColor() {
+        return color;
     }
 
     public void moveLeft() {
@@ -72,15 +86,39 @@ public class Player implements IEntity {
     }
 
     public void jump() {
-        if (isGrounded()) {
+        if (isGrounded && canJump) {
+            isGrounded = false;
+            canJump = false;
             y -= 10;
             velY = JUMP_VELOCITY;
             updateRects();
         }
     }
 
-    public boolean isGrounded() {
-        return rect.intersects(ground);
+    private void checkCollisions(ArrayList<IEntity> entities) {
+        for (IEntity entity : entities) {
+            switch (entity.checkForCollisions(this)) {
+                case BLOCK_TOP:
+                    isGrounded = true;
+                    canJump = true;
+                    y = (int) (entity.getRect().getY() - height + 1);
+                    velY = 0;
+                    break;
+
+                case BLOCK_BOTTOM:
+                    Rectangle entRect = entity.getRect();
+                    velY = -velY;
+                    y = (int) (entRect.getY() + entRect.getHeight());
+                    break;
+
+                case BLOCK_SIDE:
+                    velX = 0;
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     private void updateRects() {
