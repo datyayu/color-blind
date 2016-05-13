@@ -1,5 +1,6 @@
 package game.state;
 
+import game.levels.LevelOne;
 import game.main.Main;
 import game.utils.RNG;
 import game.utils.Resources;
@@ -69,7 +70,7 @@ public class MenuState extends State {
             selectedOption = selectedOption == 0 ? 1 : 0;
         } else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
             if (selectedOption == 0) {
-                transitionToState(new PlayState());
+                transitionToState(new LevelOne());
             } else {
                 Main.game.exitGame();
             }

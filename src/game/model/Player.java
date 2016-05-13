@@ -1,17 +1,12 @@
 package game.model;
 
 
-import game.main.Main;
-import game.utils.CollisionType;
-import game.utils.IEntity;
-import game.utils.Resources;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Player {
     private static final float GRAVITY_ACCEL = 1800;
-    private static final int JUMP_VELOCITY = -600;
+private static final int JUMP_VELOCITY = -500;
     private static final int MOVEMENT_STEP = 200;
 
     private int x;
@@ -29,12 +24,12 @@ public class Player {
     private Color color;
 
 
-    public Player(int x, int y, int width, int height) {
+    public Player(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = Resources.COLOR_BLUE;
+        this.color = color;
 
         rect = new Rectangle();
 

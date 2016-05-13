@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utils.CollisionType;
-import game.utils.IEntity;
 
 import java.awt.*;
 

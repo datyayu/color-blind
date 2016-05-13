@@ -1,7 +1,8 @@
-package game.utils;
+package game.model;
 
 
 import game.model.Player;
+import game.utils.CollisionType;
 
 import java.awt.*;
 
