@@ -1,10 +1,9 @@
-package game.utils;
+package game.levels;
 
 import game.main.Main;
 import game.model.Block;
-import game.model.IEntity;
+import game.utils.Resources;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class MapManager {
     public static final int TILE_SIZE = Main.GAME_HEIGHT / 20;
 
-    public static ArrayList<IEntity> loadMap(String filename) {
+    public static LevelMap loadMap(String filename) {
         ArrayList<String> lines = new ArrayList<String>();
         int width = 0;
         int height = 0;
@@ -34,7 +33,7 @@ public class MapManager {
                 // Ignore comment lines.
                 if (!line.startsWith("#")) {
                     lines.add(line);
-                    width = Math.max(width, line.length()); // Map width
+                    width = Math.max(width, line.length()); // LevelMap width
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -42,14 +41,14 @@ public class MapManager {
             }
         }
 
-        // Map height
+        // LevelMap height
         height = lines.size();
 
         return parseTileMap(lines, width, height);
     }
 
-    public static ArrayList<IEntity> parseTileMap(ArrayList<String> lines, int width, int height) {
-        ArrayList<IEntity> entities = new ArrayList<IEntity>();
+    public static LevelMap parseTileMap(ArrayList<String> lines, int width, int height) {
+        LevelMap map = new LevelMap(width, height);
 
         for (int y = 0; y < height; y++) {
             String line = lines.get(y);
@@ -59,28 +58,28 @@ public class MapManager {
 
                 switch (ch) {
                     case 'X':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_WHITE));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_WHITE));
                     case '0':
                     case '|':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLACK));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLACK));
                         break;
                     case '1':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_PURPLE));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_PURPLE));
                         break;
                     case '2':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
                         break;
                     case '3':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_GREEN));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_GREEN));
                         break;
                     case '4':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_YELLOW));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_YELLOW));
                         break;
                     case '5':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_ORANGE));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_ORANGE));
                         break;
                     case '6':
-                        entities.add(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
                         break;
                     default:
                         break;
@@ -88,6 +87,6 @@ public class MapManager {
             }
         }
 
-        return entities;
+        return map;
     }
 }

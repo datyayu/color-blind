@@ -1,4 +1,4 @@
-package game.model;
+package game.levels;
 
 import game.utils.Resources;
 

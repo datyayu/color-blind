@@ -1,30 +1,32 @@
 package game.state;
 
+import game.levels.LevelMap;
 import game.main.Main;
-import game.model.HUD;
+import game.levels.HUD;
 import game.model.Player;
 import game.model.IEntity;
-import game.utils.MapManager;
+import game.levels.MapManager;
 import game.utils.Resources;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public abstract  class PlayState extends State {
+    private final int PLAYER_HEIGHT = 40;
+    private final int PLAYER_WIDTH = 30;
+    private final int GROUND_HEIGHT = 150;
+
     public Player player;
     public ArrayList<IEntity> entities;
     public HUD hud;
     public int activeColor;
+    public LevelMap map;
 
-    private final int PLAYER_HEIGHT = 40;
-    private final int PLAYER_WIDTH = 30;
-    private final int GROUND_HEIGHT = 150;
     private int offsetX;
+    private int offsetY;
 
 
     @Override
@@ -52,10 +54,11 @@ public abstract  class PlayState extends State {
     public void update(float delta) {
         hud.update(activeColor);
         player.setColor(hud.getActiveColor());
-        player.update(delta, entities);
+        player.update(delta, entities, offsetX);
 
         offsetX = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
         offsetX = Math.min(offsetX, 0);
+        offsetX = Math.max(offsetX, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
 
         entities.forEach(entity -> entity.update(delta, offsetX));
     }

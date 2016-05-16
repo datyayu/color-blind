@@ -23,6 +23,7 @@ public class Player {
     private Rectangle ground;
     private Rectangle rect;
     private Color color;
+    private int offsetX;
 
 
     public Player(int x, int y, int width, int height, Color color) {
@@ -31,6 +32,7 @@ public class Player {
         this.width = width;
         this.height = height;
         this.color = color;
+        this.offsetX = 0;
 
         rect = new Rectangle();
 
@@ -38,15 +40,15 @@ public class Player {
     }
 
 
-    public void update(float delta, ArrayList<IEntity> entities) {
+    public void update(float delta, ArrayList<IEntity> entities, int offsetX) {
+        this.offsetX = offsetX;
+        
         // Jump
         if (!isGrounded) {
             velY += GRAVITY_ACCEL * delta;
         } else {
             velY = 0;
         }
-
-
 
         float yStep = (velY*delta > MAX_STEP) ? MAX_STEP : velY*delta;
         float xStep = (velX * delta > MAX_STEP) ?  MAX_STEP : velX*delta;
@@ -131,7 +133,7 @@ public class Player {
     }
 
     private void updateRects() {
-        rect.setBounds(x, y, width, height);
+        rect.setBounds(x + offsetX, y, width, height);
     }
 
     public int getX() {

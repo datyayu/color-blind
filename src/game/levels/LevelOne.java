@@ -1,12 +1,7 @@
 package game.levels;
 
-import game.model.HUD;
-import game.model.Player;
 import game.state.PlayState;
 import game.utils.Resources;
-import game.utils.MapManager;
-
-import java.awt.*;
 
 
 public class LevelOne extends PlayState {
@@ -21,6 +16,7 @@ public class LevelOne extends PlayState {
                 Resources.COLOR_ORANGE
         );
 
-        entities = MapManager.loadMap("test");
+        map = MapManager.loadMap("test");
+        entities = map.getEntities();
     }
 }
