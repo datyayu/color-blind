@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utils.CollisionType;
-import game.utils.Resources;
 
 import java.awt.*;
 
@@ -13,6 +12,7 @@ public class Block implements IEntity {
 
     private Color color;
     private Rectangle rect;
+    private int offsetX;
 
 
     public Block(int x, int y, int width, int height, Color color) {
@@ -27,14 +27,14 @@ public class Block implements IEntity {
 
 
     @Override
-    public void update(float delta) {
-
+    public void update(float delta, int offsetX) {
+        this.offsetX = offsetX;
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+        g.fillRect((int) rect.getX() + offsetX, (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Block implements IEntity {
             return CollisionType.NULL;
         }
 
-        if (!playerRect.intersects(rect)) {
+        if (!playerRect.intersects(rect.getX() + offsetX, rect.getY(), rect.getWidth(), rect.getHeight())) {
             return CollisionType.NULL;
         }
 
@@ -63,21 +63,21 @@ public class Block implements IEntity {
 
         if ((playerRect.getY() < y) &&
             (playerRect.getY() + playerRect.getHeight() <= y + 10) &&
-            (playerRect.getX() + playerRect.getWidth() > x) &&
-            (playerRect.getX() < x + width)
+            (playerRect.getX() + playerRect.getWidth() > x + offsetX) &&
+            (playerRect.getX() < x + offsetX + width)
         ){
             return CollisionType.BLOCK_TOP;
         }
 
         // LEFT HIT
         if ((playerRect.getY() + player.getHeight() > y) &&
-                (playerRect.getX() + player.getWidth() < x + 7)) {
+                (playerRect.getX() + player.getWidth() < x + offsetX + 10)) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
         if ((playerRect.getY() + player.getHeight() > y) &&
-                (playerRect.getX() > x + width - 7)) {
+                (playerRect.getX() > x + offsetX + (width/2))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }
 

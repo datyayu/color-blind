@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 public class MapManager {
-    private static final int TILE_SIZE = Main.GAME_HEIGHT / 20;
+    public static final int TILE_SIZE = Main.GAME_HEIGHT / 20;
 
     public static ArrayList<IEntity> loadMap(String filename) {
         ArrayList<String> lines = new ArrayList<String>();
