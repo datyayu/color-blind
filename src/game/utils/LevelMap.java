@@ -1,4 +1,4 @@
-package game.levels;
+package game.utils;
 
 import game.model.IEntity;
 

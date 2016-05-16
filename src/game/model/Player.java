@@ -69,11 +69,6 @@ public class Player {
         g.drawRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
     }
 
-    public void setColor(Color color) { this.color = color; }
-
-    public Color getColor() {
-        return color;
-    }
 
     public void moveLeft() {
         velX = -MOVEMENT_STEP;
@@ -95,6 +90,11 @@ public class Player {
             velY = JUMP_VELOCITY;
             updateRects();
         }
+    }
+
+
+    private void updateRects() {
+        rect.setBounds(x + offsetX, y, width, height);
     }
 
     private void checkCollisions(ArrayList<IEntity> entities) {
@@ -132,8 +132,11 @@ public class Player {
         }
     }
 
-    private void updateRects() {
-        rect.setBounds(x + offsetX, y, width, height);
+
+    public void setColor(Color color) { this.color = color; }
+
+    public Color getColor() {
+        return color;
     }
 
     public int getX() {

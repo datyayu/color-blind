@@ -1,8 +1,9 @@
-package game.levels;
+package game.utils;
 
 import game.main.Main;
 import game.model.Block;
-import game.utils.Resources;
+import game.main.Resources;
+import game.model.Portal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,8 +60,8 @@ public class MapManager {
                 switch (ch) {
                     case 'X':
                         map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_WHITE));
-                    case '0':
                     case '|':
+                    case '0':
                         map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLACK));
                         break;
                     case '1':
@@ -81,6 +82,15 @@ public class MapManager {
                     case '6':
                         map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
                         break;
+                    case 'W':
+                        map.addEntity(
+                                new Portal(
+                                        x*TILE_SIZE + (TILE_SIZE / 4),
+                                        y*TILE_SIZE + (TILE_SIZE / 4),
+                                        TILE_SIZE / 2,
+                                        TILE_SIZE / 2
+                                )
+                        );
                     default:
                         break;
                 }

@@ -1,4 +1,4 @@
-package game.utils;
+package game.main;
 
 import sun.applet.AppletAudioClip;
 

@@ -1,12 +1,13 @@
 package game.state;
 
-import game.levels.LevelMap;
+import game.model.Portal;
+import game.utils.LevelMap;
 import game.main.Main;
-import game.levels.HUD;
+import game.utils.HUD;
 import game.model.Player;
 import game.model.IEntity;
-import game.levels.MapManager;
-import game.utils.Resources;
+import game.utils.MapManager;
+import game.main.Resources;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 
-public abstract  class PlayState extends State {
+public abstract class PlayState extends State {
     private final int PLAYER_HEIGHT = 40;
     private final int PLAYER_WIDTH = 30;
     private final int GROUND_HEIGHT = 150;
@@ -60,8 +61,19 @@ public abstract  class PlayState extends State {
         offsetX = Math.min(offsetX, 0);
         offsetX = Math.max(offsetX, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
 
-        entities.forEach(entity -> entity.update(delta, offsetX));
+        entities.forEach(entity -> {
+            entity.update(delta, offsetX);
+            if (entity.getType() == "Portal") {
+                Portal portal = ((Portal) entity);
+
+                if (portal.hasWon()) {
+                    onLevelComplete();
+                }
+            }
+        });
     }
+
+    public abstract void onLevelComplete();
 
     @Override
     public void onKeyPress(KeyEvent e) {

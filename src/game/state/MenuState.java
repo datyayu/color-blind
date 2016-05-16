@@ -3,7 +3,7 @@ package game.state;
 import game.levels.LevelOne;
 import game.main.Main;
 import game.utils.RNG;
-import game.utils.Resources;
+import game.main.Resources;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

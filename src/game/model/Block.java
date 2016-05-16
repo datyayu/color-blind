@@ -48,6 +48,11 @@ public class Block implements IEntity {
     }
 
     @Override
+    public String getType() {
+        return "Block";
+    }
+
+    @Override
     public CollisionType checkForCollisions(Player player) {
         Rectangle playerRect = player.getRect();
 

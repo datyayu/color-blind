@@ -12,6 +12,7 @@ public interface IEntity {
 
     public Color getColor();
     public Rectangle getRect();
+    public String getType();
 
     CollisionType checkForCollisions(Player player);
 }

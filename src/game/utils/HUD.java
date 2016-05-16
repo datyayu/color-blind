@@ -1,6 +1,6 @@
-package game.levels;
+package game.utils;
 
-import game.utils.Resources;
+import game.main.Resources;
 
 import java.awt.*;
 import java.util.ArrayList;

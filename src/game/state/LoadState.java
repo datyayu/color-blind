@@ -1,6 +1,6 @@
 package game.state;
 
-import game.utils.Resources;
+import game.main.Resources;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
