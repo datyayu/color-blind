@@ -1,10 +1,13 @@
 package game.levels;
 
-import game.main.Main;
-import game.model.Block;
 import game.model.HUD;
+import game.model.Player;
 import game.state.PlayState;
 import game.utils.Resources;
+import game.utils.MapManager;
+
+import java.awt.*;
+
 
 public class LevelOne extends PlayState {
     @Override
@@ -18,9 +21,6 @@ public class LevelOne extends PlayState {
                 Resources.COLOR_ORANGE
         );
 
-        entities.add(new Block(0, Main.GAME_HEIGHT - 51, Main.GAME_WIDTH, 51, Resources.COLOR_BLACK));
-        entities.add(new Block(100, 350, 150, 20, Resources.COLOR_GREEN));
-        entities.add(new Block(300, 300, 150, 20, Resources.COLOR_YELLOW));
-        entities.add(new Block(500, 250, 150, 20, Resources.COLOR_BLUE));
+        entities = MapManager.loadMap("test");
     }
 }

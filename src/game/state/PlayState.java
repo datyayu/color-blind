@@ -18,14 +18,14 @@ public abstract  class PlayState extends State {
     public HUD hud;
     public int activeColor;
 
-    private final int PLAYER_HEIGHT = 50;
+    private final int PLAYER_HEIGHT = 40;
     private final int PLAYER_WIDTH = 30;
     private final int GROUND_HEIGHT = 50;
 
 
     @Override
     public void init() {
-        player = new Player(0, Main.GAME_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT, Resources.COLOR_ORANGE);
+        player = new Player(30, Main.GAME_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT, Resources.COLOR_ORANGE);
         entities = new ArrayList<IEntity>();
     }
 

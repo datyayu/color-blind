@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class Player {
     private static final float GRAVITY_ACCEL = 1800;
-private static final int JUMP_VELOCITY = -600;
+    private static final int JUMP_VELOCITY = -600;
     private static final int MOVEMENT_STEP = 200;
+    private static final int MAX_STEP = 10;
 
     private int x;
     private int y;
@@ -46,8 +47,12 @@ private static final int JUMP_VELOCITY = -600;
         }
 
 
-        y += velY * delta;
-        x += velX * delta;
+
+        float yStep = (velY*delta > MAX_STEP) ? MAX_STEP : velY*delta;
+        float xStep = (velX * delta > MAX_STEP) ?  MAX_STEP : velX*delta;
+
+        y += yStep;
+        x += xStep;
 
         isGrounded = false;
         checkCollisions(entities);
@@ -104,10 +109,19 @@ private static final int JUMP_VELOCITY = -600;
                     Rectangle entRect = entity.getRect();
                     velY = 0;
                     y = (int) (entRect.getY() + entRect.getHeight());
+                    isGrounded = false;
                     break;
 
-                case BLOCK_SIDE:
+                case BLOCK_RIGHT_SIDE:
                     velX = 0;
+                    x = x + 3;
+                    isGrounded = false;
+                    break;
+
+                case BLOCK_LEFT_SIDE:
+                    velX = 0;
+                    x = x - 3;
+                    isGrounded = false;
                     break;
 
                 default:
