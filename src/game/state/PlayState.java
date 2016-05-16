@@ -53,6 +53,11 @@ public abstract class PlayState extends State {
 
     @Override
     public void update(float delta) {
+        if (!player.isAlive()) {
+            onPlayerDeath();
+            return;
+        }
+
         hud.update(activeColor);
         player.setColor(hud.getActiveColor());
         player.update(delta, entities, offsetX);
@@ -63,6 +68,7 @@ public abstract class PlayState extends State {
 
         entities.forEach(entity -> {
             entity.update(delta, offsetX);
+
             if (entity.getType() == "Portal") {
                 Portal portal = ((Portal) entity);
 
@@ -74,6 +80,7 @@ public abstract class PlayState extends State {
     }
 
     public abstract void onLevelComplete();
+    public abstract void onPlayerDeath();
 
     @Override
     public void onKeyPress(KeyEvent e) {

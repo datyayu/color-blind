@@ -13,9 +13,7 @@ public class LevelOne extends PlayState {
 
         hud = new HUD(
                 Resources.COLOR_GREEN,
-                Resources.COLOR_YELLOW,
-                Resources.COLOR_BLUE,
-                Resources.COLOR_ORANGE
+                Resources.COLOR_BLUE
         );
 
         map = MapManager.loadMap("level1");
@@ -25,5 +23,10 @@ public class LevelOne extends PlayState {
     @Override
     public void onLevelComplete() {
         transitionToState(new LevelTwo());
+    }
+
+    @Override
+    public void onPlayerDeath() {
+        transitionToState(new LevelOne());
     }
 }

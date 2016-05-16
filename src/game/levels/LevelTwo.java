@@ -25,4 +25,9 @@ public class LevelTwo extends PlayState {
     public void onLevelComplete() {
         transitionToState(new MenuState());
     }
+
+    @Override
+    public void onPlayerDeath() {
+        transitionToState(new LevelTwo());
+    }
 }

@@ -1,6 +1,8 @@
 package game.model;
 
 
+import game.main.Main;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -19,6 +21,7 @@ public class Player {
 
     private boolean isGrounded = true;
     private boolean canJump = true;
+    private boolean isAlive = false;
 
     private Rectangle ground;
     private Rectangle rect;
@@ -35,6 +38,7 @@ public class Player {
         this.offsetX = 0;
 
         rect = new Rectangle();
+        isAlive = true;
 
         updateRects();
     }
@@ -45,6 +49,11 @@ public class Player {
         
         // Jump
         if (!isGrounded) {
+            if (y > Main.GAME_HEIGHT) {
+                isAlive = false;
+                return;
+            }
+
             velY += GRAVITY_ACCEL * delta;
         } else {
             velY = 0;
@@ -132,6 +141,9 @@ public class Player {
         }
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
 
     public void setColor(Color color) { this.color = color; }
 

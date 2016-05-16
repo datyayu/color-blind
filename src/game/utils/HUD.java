@@ -18,7 +18,9 @@ public class HUD {
     }
 
     public void update(int color) {
-        activeColor = color;
+        if (color > -1 && color < colors.size()) {
+            activeColor = color;
+        }
     }
 
     public void render(Graphics g) {
