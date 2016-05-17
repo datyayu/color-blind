@@ -135,6 +135,9 @@ public class Player {
                     isGrounded = false;
                     break;
 
+                case DEATH:
+                    isAlive = false;
+
                 default:
                     break;
             }

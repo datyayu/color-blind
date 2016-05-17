@@ -1,5 +1,6 @@
 package game.model;
 
+import game.main.Resources;
 import game.utils.CollisionType;
 
 import java.awt.*;
@@ -66,24 +67,25 @@ public class Block implements IEntity {
 
         int playerBottomY = (int) (playerRect.getY() + playerRect.getHeight());
 
-        if ((playerRect.getY() < y) &&
-            (playerRect.getY() + playerRect.getHeight() <= y + 10) &&
-            (playerRect.getX() + playerRect.getWidth() > x + offsetX) &&
-            (playerRect.getX() < x + offsetX + width)
-        ){
-            return CollisionType.BLOCK_TOP;
-        }
 
         // LEFT HIT
-        if ((playerRect.getY() + player.getHeight() > y) &&
+        if ((playerRect.getY() + player.getHeight() > y + 10) &&
                 (playerRect.getX() + player.getWidth() < x + offsetX + 10)) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
-        if ((playerRect.getY() + player.getHeight() > y) &&
+        if ((playerRect.getY() + player.getHeight() > y + 10) &&
                 (playerRect.getX() > x + offsetX + (width/2))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
+        }
+
+        if ((playerRect.getY() < y) &&
+                (playerRect.getY() + playerRect.getHeight() <= y + 10) &&
+                (playerRect.getX() + playerRect.getWidth() > x + offsetX) &&
+                (playerRect.getX() < x + offsetX + width)
+                ){
+            return CollisionType.BLOCK_TOP;
         }
 
         // Bottom Hit

@@ -4,7 +4,9 @@ import game.main.Main;
 import game.model.Block;
 import game.main.Resources;
 import game.model.Portal;
+import game.model.Spike;
 
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,6 +93,13 @@ public class MapManager {
                                         TILE_SIZE / 2
                                 )
                         );
+                        break;
+                    case 'A':
+                        map.addEntity(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        break;
+                    case 'V':
+                        map.addEntity(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        break;
                     default:
                         break;
                 }

@@ -1,0 +1,29 @@
+#  LEVEL 3
+#   This is hell. I thought this was a good idea... It wasn't.
+#
+#  Map codes:
+#   0 - BLACK
+#   1 - GREEN
+#   2 - BLUE
+#   W - Level Portal
+#   | - Boundary
+|                                                                         |
+|                                                                         |
+|                                                                         |
+|                                                              2  |       |
+|                                                           1     |       |
+|                                                        2        |       |
+|                                                2   1            |   1   |
+|                                        2   1                    |   2   |
+|                                2   1                            |       |
+|                       1    1                                    |       |
+|                  2                                              |       |
+|          1   1                                                  |       |
+|      2                                                          |       |
+|      2                                                          |   W   |
+|111                                                              |       |
+|                                                                 |   2   |
+|                                                                 |   1   |
+|00000000000                                                      |       |
+|00000000000                                                      |       |
+|00000000000                                                      |       |
