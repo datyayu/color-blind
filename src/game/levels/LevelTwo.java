@@ -1,8 +1,7 @@
 package game.levels;
 
-import game.main.Resources;
-import game.state.MenuState;
 import game.state.PlayState;
+import game.main.Resources;
 import game.utils.HUD;
 import game.utils.MapManager;
 
