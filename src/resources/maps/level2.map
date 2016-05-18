@@ -1,12 +1,15 @@
-# Color code
-#   X - WHITE
+# Level 2
+#  A level designed to trick the user and put the learned concepts in practice.
+#
+# Map codes:
 #   0 - BLACK
 #   1 - GREEN
 #   2 - BLUE
 #   3 - RED
-#   5 - ORANGE
-#   5 - YELLOW
-#   6 - PURPLE
+#   5 - Yellow
+#   V - BLUE Spikes
+#   A - RED Spikes
+#   W - Level Portal
 #   | - Boundary
 |                                                    AVAVAVAVAVAV                  |
 |     13331111111111111112222222222222222222222222222555555555555    W             |
@@ -25,6 +28,6 @@
 |                       3333   5                                2   AAAAA       111|
 |                              5                                2   22222          |
 |                              5                                2                  |
-|                              5                                2                  |
+|                          W   5                                2                  |
 |00000000000000000000000000000000                  00000000000000000AAAAAAAA0000000|
 |00000000000000000000000000000000                  00000000000000000        0000000|

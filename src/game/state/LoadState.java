@@ -1,5 +1,6 @@
 package game.state;
 
+import game.main.GameStateTree;
 import game.main.Resources;
 
 import java.awt.*;
@@ -9,24 +10,20 @@ import java.awt.event.MouseEvent;
 
 public class LoadState extends State {
     @Override
-    public void init() {
+    public void init(GameStateTree gst) {
         Resources.load();
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float delta, GameStateTree gst) {
         transitionToState(new MenuState());
     }
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(Resources.loadingImg, 0, 0, null);
-    }
+    public void render(Graphics g) {}
 
     @Override
     public void onKeyPress(KeyEvent e) {}
     @Override
     public void onKeyRelease(KeyEvent e) {}
-    @Override
-    public void onClick(MouseEvent e) {}
 }

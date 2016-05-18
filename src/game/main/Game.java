@@ -14,6 +14,7 @@ public class Game extends JPanel implements Runnable {
     private int gameWidth;
 
     private InputHandler inputHandler;
+    private volatile GameStateTree gameStateTree;
 
     private Thread gameThread;
     private volatile boolean running;
@@ -38,6 +39,7 @@ public class Game extends JPanel implements Runnable {
         super.addNotify();
 
         initInput();
+        gameStateTree = new GameStateTree();
         setCurrentState(new LoadState());
         initGame();
     }
@@ -81,7 +83,7 @@ public class Game extends JPanel implements Runnable {
     public void setCurrentState(State newState) {
         System.gc();
 
-        newState.init();
+        newState.init(gameStateTree);
         currentState = newState;
         inputHandler.setCurrentState(newState);
     }
@@ -96,9 +98,7 @@ public class Game extends JPanel implements Runnable {
     /* Action Handlers Setups */
     private void initInput() {
         inputHandler = new InputHandler();
-
         addKeyListener(inputHandler);
-        addMouseListener(inputHandler);
     }
 
     /* Game setup */
@@ -111,7 +111,7 @@ public class Game extends JPanel implements Runnable {
 
     /* Game loop */
     private void updateAndRender(long delta) {
-        currentState.update(delta / 1000f);
+        currentState.update(delta / 1000f, gameStateTree);
         prepareGameImage();
         currentState.render(gameImage.getGraphics());
         renderGameImage(getGraphics());

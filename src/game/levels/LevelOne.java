@@ -1,17 +1,17 @@
 package game.levels;
 
+import game.main.GameStateTree;
 import game.state.PlayState;
 import game.main.Resources;
-import game.utils.HUD;
 import game.utils.MapManager;
 
 
 public class LevelOne extends PlayState {
     @Override
-    public void init() {
-        super.init();
+    public void init(GameStateTree stateTree) {
+        super.init(stateTree);
 
-        hud = new HUD(
+        stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
         );

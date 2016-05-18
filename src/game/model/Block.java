@@ -65,10 +65,8 @@ public class Block implements IEntity {
             return CollisionType.NULL;
         }
 
-        int playerBottomY = (int) (playerRect.getY() + playerRect.getHeight());
 
-
-        // LEFT HIT
+        // Left hit
         if ((playerRect.getY() + player.getHeight() > y + 10) &&
                 (playerRect.getX() + player.getWidth() < x + offsetX + 10)) {
             return CollisionType.BLOCK_LEFT_SIDE;
@@ -80,6 +78,7 @@ public class Block implements IEntity {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }
 
+        // Top hit
         if ((playerRect.getY() < y) &&
                 (playerRect.getY() + playerRect.getHeight() <= y + 10) &&
                 (playerRect.getX() + playerRect.getWidth() > x + offsetX) &&

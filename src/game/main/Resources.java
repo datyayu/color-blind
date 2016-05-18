@@ -16,7 +16,7 @@ import java.net.URL;
 public class Resources {
     public static Color COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_BLACK, COLOR_WHITE;
 
-    public static Image loadingImg, menuPlayImg, menuExitImg;
+    public static Image loadingImg, mainMenuPlayImg, mainMenuExitImg, mainMenuSoundOffImg, mainMenuSoundOnImg;
 
     public static BufferedReader loadMap(String filename) {
         try {
@@ -31,20 +31,22 @@ public class Resources {
 
     public static void load() {
         loadingImg = loadImage("loading.png");
-        menuPlayImg = loadImage("menu_play.png");
-        menuExitImg = loadImage("menu_exit.png");
+        mainMenuPlayImg = loadImage("MainMenuPlay.png");
+        mainMenuExitImg = loadImage("MainMenuExit.png");
+        mainMenuSoundOffImg = loadImage("MainMenuSoundOff.png");
+        mainMenuSoundOnImg = loadImage("MainMenuSoundOn.png");
 
         loadColors();
     }
 
     private static void loadColors() {
-        COLOR_RED = new Color(225, 44, 35);
-        COLOR_ORANGE = new Color(198, 105, 2);
-        COLOR_YELLOW = new Color(215, 192, 13);
-        COLOR_GREEN = new Color(102, 179, 44);
-        COLOR_BLUE = new Color(16, 67, 214);
-        COLOR_PURPLE = new Color(164, 60, 169);
-        COLOR_BLACK = new Color(0,0,0);
+        COLOR_RED = new Color(173, 33, 26);
+        COLOR_ORANGE = new Color(168, 89, 2);
+        COLOR_YELLOW = new Color(203, 183, 11);
+        COLOR_GREEN = new Color(59, 134, 44);
+        COLOR_BLUE = new Color(21, 58, 127);
+        COLOR_PURPLE = new Color(102, 40, 106);
+        COLOR_BLACK = new Color(34, 34, 34);
         COLOR_WHITE = new Color(255, 255, 255);
     }
 
