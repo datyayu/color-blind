@@ -16,14 +16,16 @@ public class MenuState extends State {
     private int red, green, blue;
     private int red_step, green_step, blue_step;
     private int selectedOption = 0;
-    private GameStateTree stateTree;
+    public GameStateTree stateTree;
 
 
     private final int MAX_STEP = 3;
     private final int BOUNDS_PADDING = 20;
 
     @Override
-    public void init(GameStateTree gst) {
+    public void init(GameStateTree stateTree) {
+        this.stateTree = stateTree;
+
         red_step = RNG.getRandomIntBetween(1, MAX_STEP);
         blue_step = RNG.getRandomIntBetween(1, MAX_STEP);
         green_step = RNG.getRandomIntBetween(1, MAX_STEP);
@@ -73,10 +75,6 @@ public class MenuState extends State {
     public void drawBackground(Graphics g) {
         g.setColor(new Color(red, green, blue));
         g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-    }
-
-    public void drawOptions(Graphics g) {
-
     }
 
     @Override

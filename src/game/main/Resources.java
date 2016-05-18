@@ -37,6 +37,9 @@ public class Resources {
 
     public static Image heartImg;
 
+    public static Font timeFont, gameOverTimeFont;
+
+
     public static BufferedReader loadMap(String filename) {
         try {
             String filePath = System.getProperty("user.dir") + "/src/resources/maps/" + filename + ".map";
@@ -49,16 +52,22 @@ public class Resources {
     }
 
     public static void load() {
+        loadScreenImages();
+        loadColors();
+
+        heartImg = loadImage("heart.png");
+        timeFont = new Font("SansSerif", Font.BOLD, 25);
+        gameOverTimeFont = new Font("SansSerif", Font.BOLD, 50);
+    }
+
+    private static void loadScreenImages() {
         loadingImg = loadImage("screens/loading.png");
         mainMenuPlayImg = loadImage("screens/MainMenuPlay.png");
         mainMenuExitImg = loadImage("screens/MainMenuExit.png");
         mainMenuSoundOffImg = loadImage("screens/MainMenuSoundOff.png");
         mainMenuSoundOnImg = loadImage("screens/MainMenuSoundOn.png");
         pauseMenuImg = loadImage("screens/PauseMenu.png");
-        heartImg = loadImage("heart.png");
         gameOverImg = loadImage("screens/GameOver.png");
-
-        loadColors();
     }
 
     private static void loadColors() {

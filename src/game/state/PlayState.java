@@ -27,6 +27,8 @@ public abstract class PlayState extends State {
 
     private int offsetX;
 
+    public abstract void onLevelComplete();
+    public abstract void onPlayerDeath();
 
     @Override
     public void init(GameStateTree stateTree) {
@@ -38,23 +40,6 @@ public abstract class PlayState extends State {
         );
         entities = new ArrayList<>();
         offsetX = 0;
-    }
-
-    @Override
-    public void render(Graphics g) {
-        g.setColor(player.getColor());
-        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-
-        entities.forEach(entity -> entity.render(g));
-        player.render(g);
-
-        renderHUD(g);
-
-        if (stateTree.isGamePaused()) {
-            g.setColor(Resources.COLOR_PAUSE_OVERLAY);
-            g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-            g.drawImage(Resources.pauseMenuImg, 0, 0, null);
-        }
     }
 
     @Override
@@ -75,20 +60,17 @@ public abstract class PlayState extends State {
             return;
         }
 
+        stateTree.addTime(delta);
         stateTree.setActiveColor(activeColor);
         player.setColor(stateTree.getActiveColor());
         player.update(delta, entities, offsetX);
-
-        offsetX = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
-        offsetX = Math.min(offsetX, 0);
-        offsetX = Math.max(offsetX, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
-
+        offsetX = updateOffsetX(offsetX);
 
         for (IEntity entity : entities) {
             entity.update(delta, offsetX);
 
             if (entity.getType() == "Portal") {
-                Portal portal = ((Portal) entity);
+                Portal portal = (Portal) entity;
 
                 if (portal.hasWon()) {
                     onLevelComplete();
@@ -97,8 +79,35 @@ public abstract class PlayState extends State {
         };
     }
 
-    public abstract void onLevelComplete();
-    public abstract void onPlayerDeath();
+    @Override
+    public void render(Graphics g) {
+        g.setColor(stateTree.getActiveColor());
+        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+//        int entitiesRendered = 0;
+
+        for (IEntity entity : entities) {
+            Rectangle entRect = entity.getRect();
+
+            if (entity.getColor() != stateTree.getActiveColor() &&
+                    entRect.getX() + entRect.getWidth() > 0  - offsetX &&
+                    entRect.getX() < Main.GAME_WIDTH - offsetX) {
+                entity.render(g);
+//                entitiesRendered++;
+            }
+        }
+
+//        System.out.println("RENDERING " + entitiesRendered + " ENTITIES");
+
+        player.render(g);
+
+        renderHUD(g);
+
+        if (stateTree.isGamePaused()) {
+            g.setColor(Resources.COLOR_PAUSE_OVERLAY);
+            g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+            g.drawImage(Resources.pauseMenuImg, 0, 0, null);
+        }
+    }
 
     private void renderHUD(Graphics g) {
         int spacing = 0;
@@ -106,6 +115,7 @@ public abstract class PlayState extends State {
         Color currentColor = stateTree.getActiveColor();
         int remainingLives = stateTree.getRemainingLives();
 
+        /* Render color inventory */
         for (Color color : colors) {
             // Render color square.
             g.setColor(color);
@@ -121,11 +131,24 @@ public abstract class PlayState extends State {
             spacing += 30;
         }
 
+        /* Render lives */
         for (spacing = 0; spacing < remainingLives*30; spacing += 30) {
-            g.drawImage(Resources.heartImg, 30+spacing, 20, null);
+            g.drawImage(Resources.heartImg, 30+spacing, 40, null);
         }
+
+        /* Render time */
+        g.setColor(Color.WHITE);
+        g.setFont(Resources.timeFont);
+        g.drawString("TIME: " + stateTree.getTimeString(), 30, 30);
     }
 
+    private int updateOffsetX(int currentOffset) {
+        int newOffset = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
+        newOffset = Math.min(newOffset, 0);
+        newOffset = Math.max(newOffset, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
+
+        return newOffset;
+    }
 
     @Override
     public void onKeyPress(KeyEvent e) {

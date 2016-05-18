@@ -40,7 +40,7 @@ public class Block implements IEntity {
 
     @Override
     public Color getColor() {
-        return null;
+        return color;
     }
 
     @Override

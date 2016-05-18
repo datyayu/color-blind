@@ -1,9 +1,14 @@
 package game.main;
 
 
+import javafx.util.converter.TimeStringConverter;
+
 import java.awt.*;
+import java.sql.Time;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
 
 public class GameStateTree {
     // Sound is allowed
@@ -20,15 +25,13 @@ public class GameStateTree {
 
     // Game is paused
     private boolean gamePaused;
+    // Time in the current run.
+    private long time;
 
 
     public GameStateTree() {
-        gameOver = false;
         sound = true;
-        colorsInventory = new ArrayList<>();
-        livesRemaining = 3;
-        activeColor = 0;
-        gamePaused = false;
+        resetState();
     }
 
     // Reset all game state to default, except for the sound.
@@ -38,6 +41,7 @@ public class GameStateTree {
         livesRemaining = 3;
         activeColor = 0;
         gamePaused = false;
+        time = 0;
     }
 
 
@@ -140,5 +144,30 @@ public class GameStateTree {
 
     public void resetGameOver() {
         gameOver = false;
+    }
+
+
+    /********************************
+     *         Time Methods         *
+     ********************************/
+    public long getTime() {
+        return time;
+    }
+
+    public String getTimeString() {
+        Time t = new Time(time);
+
+        int minutes = t.getMinutes();
+        int seconds = t.getSeconds();
+
+        String minutesStr = minutes < 10 ? "0" + minutes : "" + minutes;
+        String secondsStr = seconds < 10 ? "0" + seconds : "" + seconds;
+
+
+        return minutesStr + ":" + secondsStr;
+    }
+
+    public void addTime(float delta) {
+        time += delta * 1000L;
     }
 }

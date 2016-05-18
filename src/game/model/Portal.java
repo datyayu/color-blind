@@ -40,7 +40,7 @@ public class Portal implements IEntity {
 
     @Override
     public Color getColor() {
-        return null;
+        return Resources.COLOR_WHITE;
     }
 
     @Override

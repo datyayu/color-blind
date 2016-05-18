@@ -5,10 +5,6 @@ A game where the only reality is the one you can see.
 Ondevelopment
 
 ## TODO list
-- [ ] Improve rendering
-- [ ] Add enemies
 - [ ] Add music
-- [ ] Keep track of the time.
+- [ ] Add enemies
 - [ ] Options menu
-- [ ] More levels
-- [ ] Tutorial-like floating text
