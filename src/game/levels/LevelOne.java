@@ -9,12 +9,12 @@ import game.utils.MapManager;
 public class LevelOne extends PlayState {
     @Override
     public void init(GameStateTree stateTree) {
-        super.init(stateTree);
-
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
         );
+
+        super.init(stateTree);
 
         map = MapManager.loadMap("level1");
         entities = map.getEntities();

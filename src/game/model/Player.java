@@ -23,7 +23,6 @@ public class Player {
     private boolean canJump = true;
     private boolean isAlive = false;
 
-    private Rectangle ground;
     private Rectangle rect;
     private Color color;
     private int offsetX;
@@ -171,10 +170,6 @@ public class Player {
     }
 
     public int getVelY() { return velY; }
-
-    public Rectangle getGround() {
-        return ground;
-    }
 
     public Rectangle getRect() {
         return rect;

@@ -34,9 +34,9 @@ public abstract class PlayState extends State {
         player = new Player(30,
                 Main.GAME_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT),
                 PLAYER_WIDTH, PLAYER_HEIGHT,
-                Resources.COLOR_ORANGE
+                stateTree.getActiveColor()
         );
-        entities = new ArrayList<IEntity>();
+        entities = new ArrayList<>();
         offsetX = 0;
     }
 
@@ -49,11 +49,19 @@ public abstract class PlayState extends State {
         player.render(g);
 
         renderHUD(g);
+
+        if (stateTree.isGamePaused()) {
+            g.setColor(Resources.COLOR_PAUSE_OVERLAY);
+            g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+            g.drawImage(Resources.pauseMenuImg, 0, 0, null);
+        }
     }
 
     @Override
     public void update(float delta, GameStateTree stateTree) {
         this.stateTree = stateTree;
+
+        if (stateTree.isGamePaused()) return;
 
         if (!player.isAlive()) {
             stateTree.removeOneLife();
@@ -63,7 +71,7 @@ public abstract class PlayState extends State {
 
         if (stateTree.isGameOver()) {
             stateTree.resetState();
-            transitionToState(new MenuState());
+            transitionToState(new GameOverState());
             return;
         }
 
@@ -92,31 +100,44 @@ public abstract class PlayState extends State {
     public abstract void onLevelComplete();
     public abstract void onPlayerDeath();
 
-
     private void renderHUD(Graphics g) {
         int spacing = 0;
+        ArrayList<Color> colors = stateTree.getAllColors();
         Color currentColor = stateTree.getActiveColor();
+        int remainingLives = stateTree.getRemainingLives();
 
-        for (Color color : stateTree.getAllColors()) {
+        for (Color color : colors) {
             // Render color square.
             g.setColor(color);
-            g.fillRect(100 + spacing, 433, 20, 20);
+            g.fillRect(20 + spacing, 433, 20, 20);
 
             // Show border on active color.
             if (color == currentColor) {
                 g.setColor(Resources.COLOR_WHITE);
-                g.drawRect(100 + spacing, 433, 20, 20);
+                g.drawRect(20 + spacing, 433, 20, 20);
             }
 
-            // 25 per square + 25 spacing.
-            spacing += 50;
+            // 20 per square + 5 spacing.
+            spacing += 30;
+        }
+
+        for (spacing = 0; spacing < remainingLives*30; spacing += 30) {
+            g.drawImage(Resources.heartImg, 30+spacing, 20, null);
         }
     }
+
 
     @Override
     public void onKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
-        System.out.println(e.getKeyCode());
+
+        if (key == KeyEvent.VK_ESCAPE) {
+            stateTree.togglePause();
+        }
+
+        if (stateTree.isGamePaused()) {
+            return;
+        }
 
         switch (key) {
             case KeyEvent.VK_1:

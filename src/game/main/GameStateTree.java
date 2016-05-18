@@ -18,6 +18,9 @@ public class GameStateTree {
     // Currently active color index
     private int activeColor;
 
+    // Game is paused
+    private boolean gamePaused;
+
 
     public GameStateTree() {
         gameOver = false;
@@ -25,6 +28,7 @@ public class GameStateTree {
         colorsInventory = new ArrayList<>();
         livesRemaining = 3;
         activeColor = 0;
+        gamePaused = false;
     }
 
     // Reset all game state to default, except for the sound.
@@ -33,12 +37,14 @@ public class GameStateTree {
         colorsInventory = new ArrayList<>();
         livesRemaining = 3;
         activeColor = 0;
+        gamePaused = false;
     }
 
 
     /********************************
      *         Sound methods        *
      ********************************/
+
     public boolean hasSound() {
         return sound;
     }
@@ -100,6 +106,27 @@ public class GameStateTree {
         if (livesRemaining == 0) {
             gameOver = true;
         }
+    }
+
+
+    /********************************
+     *     Game paused methods      *
+     ********************************/
+
+    public boolean isGamePaused() {
+        return  gamePaused;
+    }
+
+    public void pauseGame() {
+        gamePaused = true;
+    }
+
+    public void resumeGame() {
+        gamePaused = false;
+    }
+
+    public void togglePause() {
+        gamePaused = !gamePaused;
     }
 
 

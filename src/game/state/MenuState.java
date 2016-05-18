@@ -57,8 +57,7 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(new Color(red, green, blue));
-        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+       drawBackground(g);
 
         if (selectedOption == 0) {
             g.drawImage(Resources.mainMenuPlayImg, 0, 0, null);
@@ -69,6 +68,15 @@ public class MenuState extends State {
         } else {
             g.drawImage(Resources.mainMenuExitImg, 0, 0, null);
         }
+    }
+
+    public void drawBackground(Graphics g) {
+        g.setColor(new Color(red, green, blue));
+        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+    }
+
+    public void drawOptions(Graphics g) {
+
     }
 
     @Override

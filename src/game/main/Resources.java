@@ -1,6 +1,7 @@
 package game.main;
 
 import sun.applet.AppletAudioClip;
+import sun.awt.image.PixelConverter;
 
 import javax.imageio.ImageIO;
 import java.applet.AudioClip;
@@ -14,9 +15,27 @@ import java.net.URL;
 
 
 public class Resources {
-    public static Color COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_PURPLE, COLOR_BLACK, COLOR_WHITE;
+    public static Color
+            COLOR_RED,
+            COLOR_ORANGE,
+            COLOR_YELLOW,
+            COLOR_GREEN,
+            COLOR_BLUE,
+            COLOR_PURPLE,
+            COLOR_BLACK,
+            COLOR_WHITE,
+            COLOR_PAUSE_OVERLAY;
 
-    public static Image loadingImg, mainMenuPlayImg, mainMenuExitImg, mainMenuSoundOffImg, mainMenuSoundOnImg;
+    public static Image
+            loadingImg,
+            mainMenuPlayImg,
+            mainMenuExitImg,
+            mainMenuSoundOffImg,
+            mainMenuSoundOnImg,
+            pauseMenuImg,
+            gameOverImg;
+
+    public static Image heartImg;
 
     public static BufferedReader loadMap(String filename) {
         try {
@@ -30,11 +49,14 @@ public class Resources {
     }
 
     public static void load() {
-        loadingImg = loadImage("loading.png");
-        mainMenuPlayImg = loadImage("MainMenuPlay.png");
-        mainMenuExitImg = loadImage("MainMenuExit.png");
-        mainMenuSoundOffImg = loadImage("MainMenuSoundOff.png");
-        mainMenuSoundOnImg = loadImage("MainMenuSoundOn.png");
+        loadingImg = loadImage("screens/loading.png");
+        mainMenuPlayImg = loadImage("screens/MainMenuPlay.png");
+        mainMenuExitImg = loadImage("screens/MainMenuExit.png");
+        mainMenuSoundOffImg = loadImage("screens/MainMenuSoundOff.png");
+        mainMenuSoundOnImg = loadImage("screens/MainMenuSoundOn.png");
+        pauseMenuImg = loadImage("screens/PauseMenu.png");
+        heartImg = loadImage("heart.png");
+        gameOverImg = loadImage("screens/GameOver.png");
 
         loadColors();
     }
@@ -48,6 +70,7 @@ public class Resources {
         COLOR_PURPLE = new Color(102, 40, 106);
         COLOR_BLACK = new Color(34, 34, 34);
         COLOR_WHITE = new Color(255, 255, 255);
+        COLOR_PAUSE_OVERLAY = new Color(34, 34, 34, 100);
     }
 
     private static AudioClip loadSound(String filename) {
