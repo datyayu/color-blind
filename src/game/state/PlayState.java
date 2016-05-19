@@ -50,12 +50,16 @@ public abstract class PlayState extends State {
 
         if (!player.isAlive()) {
             stateTree.removeOneLife();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             onPlayerDeath();
             return;
         }
 
         if (stateTree.isGameOver()) {
-            stateTree.resetState();
             transitionToState(new GameOverState());
             return;
         }
@@ -83,7 +87,6 @@ public abstract class PlayState extends State {
     public void render(Graphics g) {
         g.setColor(stateTree.getActiveColor());
         g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-//        int entitiesRendered = 0;
 
         for (IEntity entity : entities) {
             Rectangle entRect = entity.getRect();
@@ -92,11 +95,8 @@ public abstract class PlayState extends State {
                     entRect.getX() + entRect.getWidth() > 0  - offsetX &&
                     entRect.getX() < Main.GAME_WIDTH - offsetX) {
                 entity.render(g);
-//                entitiesRendered++;
             }
         }
-
-//        System.out.println("RENDERING " + entitiesRendered + " ENTITIES");
 
         player.render(g);
 

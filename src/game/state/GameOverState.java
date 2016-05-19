@@ -30,8 +30,8 @@ public class GameOverState extends MenuState {
     @Override
     public void onKeyPress(KeyEvent e) {
         if (time > 1000) {
-            stateTree.resetState();
             transitionToState(new MenuState());
+            stateTree.resetState();
         }
     }
 }

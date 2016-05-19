@@ -2,6 +2,7 @@ package game.model;
 
 
 import game.main.Main;
+import game.utils.CollisionType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ public class Player {
 
     private Rectangle rect;
     private Color color;
+    private Color previousColor;
     private int offsetX;
+    private boolean justSwitched;
 
 
     public Player(int x, int y, int width, int height, Color color) {
@@ -45,21 +48,23 @@ public class Player {
 
     public void update(float delta, ArrayList<IEntity> entities, int offsetX) {
         this.offsetX = offsetX;
+
+        if (y > Main.GAME_HEIGHT) {
+            isAlive = false;
+            return;
+        }
+
+        justSwitched = previousColor == color ? false : true;
         
         // Jump
         if (!isGrounded) {
-            if (y > Main.GAME_HEIGHT) {
-                isAlive = false;
-                return;
-            }
-
             velY += GRAVITY_ACCEL * delta;
         } else {
             velY = 0;
         }
 
-        float yStep = (velY*delta > MAX_STEP) ? MAX_STEP : velY*delta;
-        float xStep = (velX * delta > MAX_STEP) ?  MAX_STEP : velX*delta;
+        float yStep = (velY * delta > MAX_STEP) ? MAX_STEP : velY * delta;
+        float xStep = (velX * delta > MAX_STEP) ? MAX_STEP : velX * delta;
 
         y += yStep;
         x += xStep;
@@ -67,6 +72,8 @@ public class Player {
         isGrounded = false;
         checkCollisions(entities);
         updateRects();
+
+        previousColor = color;
     }
 
 
@@ -107,7 +114,16 @@ public class Player {
 
     private void checkCollisions(ArrayList<IEntity> entities) {
         for (IEntity entity : entities) {
-            switch (entity.checkForCollisions(this)) {
+            CollisionType collision = entity.checkForCollisions(this);
+
+            if (justSwitched &&
+                    collision != CollisionType.BLOCK_TOP &&
+                    collision != CollisionType.NULL) {
+                isAlive = false;
+                return;
+            }
+
+            switch (collision) {
                 case BLOCK_TOP:
                     isGrounded = true;
                     canJump = true;
