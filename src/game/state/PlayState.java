@@ -45,6 +45,8 @@ public abstract class PlayState extends State {
         entities = new ArrayList<>();
         offsetX = 0;
         offsetY = 0;
+
+        entities = map.getEntities();
     }
 
     @Override
@@ -105,7 +107,6 @@ public abstract class PlayState extends State {
         }
 
         player.render(g);
-
         renderHUD(g);
 
         if (stateTree.isGamePaused()) {
@@ -178,19 +179,28 @@ public abstract class PlayState extends State {
 
         switch (key) {
             case KeyEvent.VK_1:
+            case KeyEvent.VK_NUMPAD1:
                 activeColor = 0;
                 break;
 
             case KeyEvent.VK_2:
+            case KeyEvent.VK_NUMPAD2:
                 activeColor = 1;
                 break;
 
             case KeyEvent.VK_3:
+            case KeyEvent.VK_NUMPAD3:
                 activeColor = 2;
                 break;
 
             case KeyEvent.VK_4:
+            case KeyEvent.VK_NUMPAD4:
                 activeColor = 3;
+                break;
+
+            case KeyEvent.VK_5:
+            case KeyEvent.VK_NUMPAD5:
+                activeColor = 4;
                 break;
 
             case KeyEvent.VK_LEFT:
@@ -201,7 +211,7 @@ public abstract class PlayState extends State {
                 player.moveRight();
                 break;
 
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_UP:
                 player.jump();
                 break;
 
