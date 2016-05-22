@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 
 public abstract class PlayState extends State {
-    private final int PLAYER_HEIGHT = 40;
-    private final int PLAYER_WIDTH = 30;
+    private final int PLAYER_HEIGHT = 80;
+    private final int PLAYER_WIDTH = 60;
     private final int GROUND_HEIGHT = 150;
 
     public Player player;
@@ -26,6 +26,7 @@ public abstract class PlayState extends State {
     public GameStateTree stateTree;
 
     private int offsetX;
+    private int offsetY;
 
     public abstract void onLevelComplete();
     public abstract void onPlayerDeath();
@@ -33,13 +34,17 @@ public abstract class PlayState extends State {
     @Override
     public void init(GameStateTree stateTree) {
         this.stateTree = stateTree;
-        player = new Player(30,
-                Main.GAME_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT),
-                PLAYER_WIDTH, PLAYER_HEIGHT,
-                stateTree.getActiveColor()
+        player = new Player(
+                MapManager.TILE_SIZE * 2,
+                Main.GAME_HEIGHT - (MapManager.TILE_SIZE * 2 + PLAYER_HEIGHT),
+                PLAYER_WIDTH,
+                PLAYER_HEIGHT,
+                stateTree.getActiveColor(),
+                map.getHeight()
         );
         entities = new ArrayList<>();
         offsetX = 0;
+        offsetY = 0;
     }
 
     @Override
@@ -67,11 +72,12 @@ public abstract class PlayState extends State {
         stateTree.addTime(delta);
         stateTree.setActiveColor(activeColor);
         player.setColor(stateTree.getActiveColor());
-        player.update(delta, entities, offsetX);
-        offsetX = updateOffsetX(offsetX);
+        player.update(delta, entities, offsetX, offsetY);
+        offsetX = updateOffsetX();
+        offsetY = updateOffsetY();
 
         for (IEntity entity : entities) {
-            entity.update(delta, offsetX);
+            entity.update(delta, offsetX, offsetY);
 
             if (entity.getType() == "Portal") {
                 Portal portal = (Portal) entity;
@@ -142,7 +148,7 @@ public abstract class PlayState extends State {
         g.drawString("TIME: " + stateTree.getTimeString(), 30, 30);
     }
 
-    private int updateOffsetX(int currentOffset) {
+    private int updateOffsetX() {
         int newOffset = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
         newOffset = Math.min(newOffset, 0);
         newOffset = Math.max(newOffset, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
@@ -150,6 +156,14 @@ public abstract class PlayState extends State {
         return newOffset;
     }
 
+
+    private int updateOffsetY() {
+        int newOffset = (Main.GAME_HEIGHT / 2) - player.getY() - MapManager.TILE_SIZE;
+        newOffset = Math.min(newOffset, 0);
+        newOffset = Math.max(newOffset, Main.GAME_HEIGHT - map.getHeight()*MapManager.TILE_SIZE);
+
+        return newOffset;
+    }
     @Override
     public void onKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
@@ -187,7 +201,7 @@ public abstract class PlayState extends State {
                 player.moveRight();
                 break;
 
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_SPACE:
                 player.jump();
                 break;
 

@@ -3,6 +3,7 @@ package game.levels;
 
 import game.main.GameStateTree;
 import game.main.Resources;
+import game.state.GameOverState;
 import game.state.PlayState;
 import game.utils.MapManager;
 
@@ -18,9 +19,10 @@ public class LevelX extends PlayState {
                 Resources.COLOR_BLUE
         );
 
+        map = MapManager.loadMap("level1");
+
         super.init(stateTree);
 
-        map = MapManager.loadMap("level1");
         entities = map.getEntities();
     }
 
@@ -43,7 +45,7 @@ public class LevelX extends PlayState {
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new LevelTwo());
+        transitionToState(new GameOverState());
     }
 
     @Override

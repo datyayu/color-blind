@@ -14,6 +14,7 @@ public class Spike implements IEntity {
     private Color color;
     private Rectangle rect;
     private int offsetX;
+    private int offsetY;
 
 
     public Spike(int x, int y, int width, int height, Color color) {
@@ -28,14 +29,15 @@ public class Spike implements IEntity {
 
 
     @Override
-    public void update(float delta, int offsetX) {
+    public void update(float delta, int offsetX, int offsetY) {
         this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     @Override
     public void render(Graphics g) {
         int[] xPoints = {x + offsetX, x + offsetX + width, x + offsetX + (width/2)};
-        int[] yPoints = {y + height, y + height, y};
+        int[] yPoints = {y + offsetY + height, y + offsetY + height, y + offsetY};
 
         g.setColor(color);
         g.fillPolygon(xPoints, yPoints, 3);
@@ -64,7 +66,7 @@ public class Spike implements IEntity {
             return CollisionType.NULL;
         }
 
-        if (playerRect.intersects(rect.getX() + offsetX, rect.getY(), rect.getWidth(), rect.getHeight())) {
+        if (playerRect.intersects(rect.getX() + offsetX, rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
             return CollisionType.DEATH;
         }
 

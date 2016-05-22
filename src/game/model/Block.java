@@ -14,6 +14,7 @@ public class Block implements IEntity {
     private Color color;
     private Rectangle rect;
     private int offsetX;
+    private int offsetY;
 
 
     public Block(int x, int y, int width, int height, Color color) {
@@ -28,14 +29,15 @@ public class Block implements IEntity {
 
 
     @Override
-    public void update(float delta, int offsetX) {
+    public void update(float delta, int offsetX, int offsetY) {
         this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(color);
-        g.fillRect((int) rect.getX() + offsetX, (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+        g.fillRect((int) rect.getX() + offsetX, (int) rect.getY() + offsetY, (int) rect.getWidth(), (int) rect.getHeight());
     }
 
     @Override
@@ -61,26 +63,26 @@ public class Block implements IEntity {
             return CollisionType.NULL;
         }
 
-        if (!playerRect.intersects(rect.getX() + offsetX, rect.getY(), rect.getWidth(), rect.getHeight())) {
+        if (!playerRect.intersects(rect.getX() + offsetX, rect.getY() +  offsetY,  rect.getWidth(), rect.getHeight())) {
             return CollisionType.NULL;
         }
 
 
         // Left hit
-        if ((playerRect.getY() + player.getHeight() > y + 10) &&
-                (playerRect.getX() + player.getWidth() < x + offsetX + 10)) {
+        if ((playerRect.getY() + player.getHeight() > y + offsetY + 10) &&
+                (playerRect.getX() + player.getWidth() < x + offsetX + (width/2))) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
-        if ((playerRect.getY() + player.getHeight() > y + 10) &&
+        if ((playerRect.getY() + player.getHeight() > y + offsetY + 10) &&
                 (playerRect.getX() > x + offsetX + (width/2))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }
 
         // Top hit
-        if ((playerRect.getY() < y) &&
-                (playerRect.getY() + playerRect.getHeight() <= y + 10) &&
+        if ((playerRect.getY() < y + offsetY) &&
+                (playerRect.getY() + playerRect.getHeight() <= y + offsetY + 10) &&
                 (playerRect.getX() + playerRect.getWidth() > x + offsetX) &&
                 (playerRect.getX() < x + offsetX + width)
                 ){

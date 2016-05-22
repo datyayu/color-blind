@@ -13,6 +13,7 @@ public class Portal implements IEntity {
     private int width;
     private int height;
     private Rectangle rect;
+    private int offsetY;
     private int offsetX;
 
     public Portal(int x, int y, int width, int height) {
@@ -26,16 +27,17 @@ public class Portal implements IEntity {
     }
 
     @Override
-    public void update(float delta, int offsetX) {
+    public void update(float delta, int offsetX, int offsetY) {
         this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Resources.COLOR_WHITE);
-        g.fillRect(x + offsetX, y, width, height);
+        g.fillRect(x + offsetX, y + offsetY, width, height);
         g.setColor(Resources.COLOR_BLACK);
-        g.drawRect(x + offsetX, y, width, height);
+        g.drawRect(x + offsetX, y + offsetY, width, height);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class Portal implements IEntity {
 
     @Override
     public CollisionType checkForCollisions(Player player) {
-        if (player.getRect().intersects(rect.getX() + offsetX, rect.getY(), rect.getWidth(), rect.getHeight())) {
+        if (player.getRect().intersects(rect.getX() + offsetX, rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
             reached = true;
             return CollisionType.LEVEL_COMPLETE;
         }

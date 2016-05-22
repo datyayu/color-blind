@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class MapManager {
-    public static final int TILE_SIZE = Main.GAME_HEIGHT / 20;
+    public static final int TILE_SIZE = (Main.GAME_HEIGHT * 2 / 20);
 
     public static LevelMap loadMap(String filename) {
         ArrayList<String> lines = new ArrayList<String>();

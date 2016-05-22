@@ -1,11 +1,14 @@
 package game.main;
 
+import game.animation.Frame;
+import game.animation.FrameAnimation;
 import sun.applet.AppletAudioClip;
-import sun.awt.image.PixelConverter;
 
 import javax.imageio.ImageIO;
 import java.applet.AudioClip;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -39,6 +42,8 @@ public class Resources {
 
     public static Font timeFont, gameOverTimeFont;
 
+    public static FrameAnimation jumpRAnimation, jumpLAnimation, runRAnimation, runLAnimation;
+
 
     public static BufferedReader loadMap(String filename) {
         try {
@@ -54,6 +59,7 @@ public class Resources {
     public static void load() {
         loadScreenImages();
         loadColors();
+        loadAnimations();
 
         heartImg = loadImage("heart.png");
         timeFont = new Font("SansSerif", Font.BOLD, 25);
@@ -80,6 +86,13 @@ public class Resources {
         COLOR_BLACK = new Color(34, 34, 34);
         COLOR_WHITE = new Color(255, 255, 255);
         COLOR_PAUSE_OVERLAY = new Color(34, 34, 34, 100);
+    }
+
+    private static void loadAnimations() {
+        jumpRAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/jumpR.png"), .4f, 0, 7, false);
+        jumpLAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/jumpL.png"), .4f, 0, 7, false);
+        runRAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/runR.png"), .3f, 0, 7, true);
+        runLAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/runL.png"), .3f, 0, 7, true);
     }
 
     private static AudioClip loadSound(String filename) {

@@ -15,16 +15,16 @@ public class LevelThree extends PlayState {
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
         );
+        map = MapManager.loadMap("level3");
 
         super.init(stateTree);
 
-        map = MapManager.loadMap("level3");
         entities = map.getEntities();
     }
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new GameOverState());
+        transitionToState(new LevelX());
     }
 
     @Override

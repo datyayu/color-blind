@@ -13,10 +13,10 @@ public class LevelOne extends PlayState {
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
         );
+        map = MapManager.loadMap("level1");
 
         super.init(stateTree);
 
-        map = MapManager.loadMap("level1");
         entities = map.getEntities();
     }
 

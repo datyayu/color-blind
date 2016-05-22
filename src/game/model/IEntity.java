@@ -7,7 +7,7 @@ import java.awt.*;
 
 
 public interface IEntity {
-    public void update(float delta, int offsetX);
+    public void update(float delta, int offsetX, int offsetY);
     public void render(Graphics g);
 
     public Color getColor();

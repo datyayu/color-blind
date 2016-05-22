@@ -94,7 +94,7 @@ public class MenuState extends State {
             case KeyEvent.VK_ENTER:
             case KeyEvent.VK_SPACE:
                 if (selectedOption == 0) {
-                    transitionToState(new LevelX());
+                    transitionToState(new LevelOne());
                 } else if (selectedOption == 1) {
                     stateTree.setHasSound(!stateTree.hasSound());
                 } else {
