@@ -28,16 +28,15 @@ public class Portal implements IEntity {
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        rect.setBounds(x + offsetX, y + offsetY, width, height);
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Resources.COLOR_WHITE);
-        g.fillRect(x + offsetX, y + offsetY, width, height);
+        g.fillRect((int) rect.getX(), (int) rect.getY(), width, height);
         g.setColor(Resources.COLOR_BLACK);
-        g.drawRect(x + offsetX, y + offsetY, width, height);
+        g.drawRect((int) rect.getX(), (int) rect.getY(), width, height);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class Portal implements IEntity {
 
     @Override
     public CollisionType checkForCollisions(Player player) {
-        if (player.getRect().intersects(rect.getX() + offsetX, rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
+        if (player.getRect().intersects(rect)) {
             reached = true;
             return CollisionType.LEVEL_COMPLETE;
         }

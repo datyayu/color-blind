@@ -13,8 +13,7 @@ public class LevelTwo extends PlayState {
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
-                Resources.COLOR_BLUE,
-                Resources.COLOR_RED
+                Resources.COLOR_BLUE
         );
 
         super.init(stateTree);

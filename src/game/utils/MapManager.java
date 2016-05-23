@@ -1,10 +1,8 @@
 package game.utils;
 
 import game.main.Main;
-import game.model.Block;
+import game.model.*;
 import game.main.Resources;
-import game.model.Portal;
-import game.model.Spike;
 
 import javax.annotation.Resource;
 import java.io.BufferedReader;
@@ -100,6 +98,15 @@ public class MapManager {
                     case 'V':
                         map.addEntity(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
                         break;
+
+                    /* COLORS */
+                    case 'R':
+                        map.addEntity(new ColorToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        break;
+
+                    case 'H':
+                        map.addEntity(new HeartToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+
                     default:
                         break;
                 }

@@ -179,14 +179,14 @@ public class Player {
                 case BLOCK_TOP:
                     isGrounded = true;
                     canJump = true;
-                    y = (int) (entity.getRect().getY() - height + 1);
+                    y = (int) (entity.getRect().getY() - offsetY - height + 1);
                     velY = 0;
                     break;
 
                 case BLOCK_BOTTOM:
                     Rectangle entRect = entity.getRect();
                     velY = 0;
-                    y = (int) (entRect.getY() + entRect.getHeight());
+                    y = (int) (entRect.getY() - offsetY + entRect.getHeight());
                     isGrounded = false;
                     break;
 

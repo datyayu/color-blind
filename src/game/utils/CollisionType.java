@@ -9,4 +9,6 @@ public enum CollisionType {
     BLOCK_RIGHT_SIDE,
     BLOCK_BOTTOM,
     BLOCK_TOP,
+    NEW_COLOR,
+    ADD_LIFE,
 }

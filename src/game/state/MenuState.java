@@ -1,6 +1,7 @@
 package game.state;
 
 import game.levels.LevelOne;
+import game.levels.LevelTwo;
 import game.levels.LevelX;
 import game.main.Game;
 import game.main.GameStateTree;
@@ -94,7 +95,7 @@ public class MenuState extends State {
             case KeyEvent.VK_ENTER:
             case KeyEvent.VK_SPACE:
                 if (selectedOption == 0) {
-                    transitionToState(new LevelOne());
+                    transitionToState(new LevelTwo());
                 } else if (selectedOption == 1) {
                     stateTree.setHasSound(!stateTree.hasSound());
                 } else {

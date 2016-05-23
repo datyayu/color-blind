@@ -1,11 +1,9 @@
 package game.state;
 
 import game.main.GameStateTree;
-import game.model.Portal;
+import game.model.*;
 import game.utils.LevelMap;
 import game.main.Main;
-import game.model.Player;
-import game.model.IEntity;
 import game.utils.MapManager;
 import game.main.Resources;
 
@@ -78,41 +76,82 @@ public abstract class PlayState extends State {
         offsetX = updateOffsetX();
         offsetY = updateOffsetY();
 
+        updateEntities(delta);
+    }
+
+    private int updateOffsetX() {
+        int newOffset = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
+        newOffset = Math.min(newOffset, 0);
+        newOffset = Math.max(newOffset, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
+
+        return newOffset;
+    }
+
+    private int updateOffsetY() {
+        int newOffset = (Main.GAME_HEIGHT / 2) - player.getY() - MapManager.TILE_SIZE;
+        newOffset = Math.min(newOffset, 0);
+        newOffset = Math.max(newOffset, Main.GAME_HEIGHT - map.getHeight()*MapManager.TILE_SIZE);
+
+        return newOffset;
+    }
+
+    private void updateEntities(float delta) {
         for (IEntity entity : entities) {
             entity.update(delta, offsetX, offsetY);
 
-            if (entity.getType() == "Portal") {
+            checkEdgeCasesOnEntity(entity);
+        }
+    }
+
+    private void checkEdgeCasesOnEntity(IEntity entity) {
+        switch (entity.getType()) {
+            case "Portal":
                 Portal portal = (Portal) entity;
 
                 if (portal.hasWon()) {
                     onLevelComplete();
                 }
-            }
-        };
+
+                break;
+
+            case "ColorToken":
+                ColorToken cToken = (ColorToken) entity;
+
+                if (!cToken.isAvailable() && !cToken.wasObtained()) {
+                    cToken.setAsObtained();
+                    stateTree.addColor(cToken.getColor());
+                }
+
+                break;
+
+            case "HeartToken":
+                HeartToken hToken = (HeartToken) entity;
+
+                if (!hToken.isAvailable() && !hToken.wasObtained()) {
+                    hToken.setAsObtained();
+                    stateTree.addOneLife();
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
+
 
     @Override
     public void render(Graphics g) {
         g.setColor(stateTree.getActiveColor());
         g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
 
-        for (IEntity entity : entities) {
-            Rectangle entRect = entity.getRect();
-
-            if (entity.getColor() != stateTree.getActiveColor() &&
-                    entRect.getX() + entRect.getWidth() > 0  - offsetX &&
-                    entRect.getX() < Main.GAME_WIDTH - offsetX) {
-                entity.render(g);
-            }
-        }
+        renderEntities(g);
 
         player.render(g);
         renderHUD(g);
 
         if (stateTree.isGamePaused()) {
-            g.setColor(Resources.COLOR_PAUSE_OVERLAY);
-            g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-            g.drawImage(Resources.pauseMenuImg, 0, 0, null);
+            renderPauseMenu(g);
         }
     }
 
@@ -149,22 +188,24 @@ public abstract class PlayState extends State {
         g.drawString("TIME: " + stateTree.getTimeString(), 30, 30);
     }
 
-    private int updateOffsetX() {
-        int newOffset = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
-        newOffset = Math.min(newOffset, 0);
-        newOffset = Math.max(newOffset, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
+    private void renderEntities(Graphics g) {
+        for (IEntity entity : entities) {
+            Rectangle entRect = entity.getRect();
 
-        return newOffset;
+            if (entity.getColor() != stateTree.getActiveColor() &&
+                    entRect.getX() + entRect.getWidth() > 0 &&
+                    entRect.getX() < Main.GAME_WIDTH) {
+                entity.render(g);
+            }
+        }
     }
 
-
-    private int updateOffsetY() {
-        int newOffset = (Main.GAME_HEIGHT / 2) - player.getY() - MapManager.TILE_SIZE;
-        newOffset = Math.min(newOffset, 0);
-        newOffset = Math.max(newOffset, Main.GAME_HEIGHT - map.getHeight()*MapManager.TILE_SIZE);
-
-        return newOffset;
+    private void renderPauseMenu(Graphics g) {
+        g.setColor(Resources.COLOR_PAUSE_OVERLAY);
+        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+        g.drawImage(Resources.pauseMenuImg, 0, 0, null);
     }
+
     @Override
     public void onKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
@@ -213,6 +254,10 @@ public abstract class PlayState extends State {
 
             case KeyEvent.VK_UP:
                 player.jump();
+                break;
+
+            case KeyEvent.VK_SPACE:
+                activeColor = stateTree.getNextColorIndex();
                 break;
 
             default:

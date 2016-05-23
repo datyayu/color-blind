@@ -8,15 +8,22 @@ import java.awt.event.KeyEvent;
 
 abstract public class HardPlayState extends PlayState {
     private int timer;
+    private int nColors;
 
     public HardPlayState() {
         super();
         timer = 0;
     }
+    @Override
+    public void init(GameStateTree stateTree) {
+        super.init(stateTree);
+
+    }
 
     @Override
     public void update(float delta, GameStateTree stateTree) {
         timer += delta * 1000L;
+
 
         if (timer > 2000) {
             timer = 0;

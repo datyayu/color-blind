@@ -24,20 +24,19 @@ public class Spike implements IEntity {
         this.height = height;
         this.color = color;
 
-        rect = new Rectangle(x, y, width, height);
+        rect = new Rectangle();
     }
 
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
+        rect.setBounds(x + offsetX, y + offsetY, width, height);
     }
 
     @Override
     public void render(Graphics g) {
-        int[] xPoints = {x + offsetX, x + offsetX + width, x + offsetX + (width/2)};
-        int[] yPoints = {y + offsetY + height, y + offsetY + height, y + offsetY};
+        int[] xPoints = {(int) rect.getX(), (int) rect.getX() + width, (int) rect.getX() + (width/2)};
+        int[] yPoints = {(int) rect.getY() + height, (int) rect.getY()+ height, (int) rect.getY()};
 
         g.setColor(color);
         g.fillPolygon(xPoints, yPoints, 3);
@@ -66,7 +65,7 @@ public class Spike implements IEntity {
             return CollisionType.NULL;
         }
 
-        if (playerRect.intersects(rect.getX() + offsetX, rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
+        if (playerRect.intersects(rect.getX(), rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
             return CollisionType.DEATH;
         }
 

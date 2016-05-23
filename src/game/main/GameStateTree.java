@@ -74,7 +74,17 @@ public class GameStateTree {
         }
     }
 
+    public int getNextColorIndex() {
+        if (activeColor + 1 == colorsInventory.size()) {
+            return 0;
+        }
+
+        return activeColor + 1;
+    }
+
     public void addColor(Color color) {
+        if (colorsInventory.size() >= 5) return;
+
         colorsInventory.add(color);
     }
 
@@ -101,6 +111,8 @@ public class GameStateTree {
     }
 
     public void addOneLife() {
+        if (livesRemaining >= 5) return;
+
         livesRemaining += 1;
     }
 
