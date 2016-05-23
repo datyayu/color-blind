@@ -1,9 +1,6 @@
 package game.state;
 
 import game.levels.LevelOne;
-import game.levels.LevelTwo;
-import game.levels.LevelX;
-import game.main.Game;
 import game.main.GameStateTree;
 import game.main.Main;
 import game.utils.RNG;
@@ -11,7 +8,6 @@ import game.main.Resources;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 
 public class MenuState extends State {
@@ -20,9 +16,9 @@ public class MenuState extends State {
     private int selectedOption = 0;
     public GameStateTree stateTree;
 
-
     private final int MAX_STEP = 3;
     private final int BOUNDS_PADDING = 20;
+
 
     @Override
     public void init(GameStateTree stateTree) {
@@ -37,10 +33,15 @@ public class MenuState extends State {
         blue = 132;
     }
 
+
     @Override
     public void update(float delta, GameStateTree stateTree) {
         this.stateTree = stateTree;
 
+        updateBGColors();
+    }
+
+    private void updateBGColors() {
         if (red > (255 - BOUNDS_PADDING) || red < BOUNDS_PADDING*3) {
             red -= red_step;
             red_step = -RNG.numberOrRandom(red_step, MAX_STEP);
@@ -59,10 +60,19 @@ public class MenuState extends State {
         blue += blue_step;
     }
 
+
     @Override
     public void render(Graphics g) {
-       drawBackground(g);
+        drawBackground(g);
+        drawMenu(g);
+    }
 
+    public void drawBackground(Graphics g) {
+        g.setColor(new Color(red, green, blue));
+        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
+    }
+
+    private void drawMenu(Graphics g) {
         if (selectedOption == 0) {
             g.drawImage(Resources.mainMenuPlayImg, 0, 0, null);
         } else if (selectedOption == 1 && stateTree.hasSound()) {
@@ -74,10 +84,6 @@ public class MenuState extends State {
         }
     }
 
-    public void drawBackground(Graphics g) {
-        g.setColor(new Color(red, green, blue));
-        g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-    }
 
     @Override
     public void onKeyPress(KeyEvent e) {
@@ -95,7 +101,7 @@ public class MenuState extends State {
             case KeyEvent.VK_ENTER:
             case KeyEvent.VK_SPACE:
                 if (selectedOption == 0) {
-                    transitionToState(new LevelTwo());
+                    transitionToState(new LevelOne());
                 } else if (selectedOption == 1) {
                     stateTree.setHasSound(!stateTree.hasSound());
                 } else {
@@ -107,7 +113,6 @@ public class MenuState extends State {
                 break;
         }
     }
-
 
     @Override
     public void onKeyRelease(KeyEvent e) {}

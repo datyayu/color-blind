@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 public class LevelX extends HardPlayState {
     @Override
     public void init(GameStateTree stateTree) {
-        map = MapManager.loadMap("level1");
+        map = MapManager.loadMap("level2");
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,

@@ -2,13 +2,15 @@ package game.state;
 
 
 import game.main.GameStateTree;
+import game.main.Main;
+import game.model.IEntity;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 
 abstract public class HardPlayState extends PlayState {
-    private int timer;
-    private int nColors;
+    private long timer;
 
     public HardPlayState() {
         super();
@@ -17,25 +19,30 @@ abstract public class HardPlayState extends PlayState {
     @Override
     public void init(GameStateTree stateTree) {
         super.init(stateTree);
-
+        entities = map.getEntities();
     }
 
     @Override
     public void update(float delta, GameStateTree stateTree) {
         timer += delta * 1000L;
 
-
-        if (timer > 2000) {
-            timer = 0;
-        }
-
-        if (timer > 1000) {
-            activeColor = 1;
-        } else {
-            activeColor = 0;
-        }
+        activeColor = (int) ((timer/3000) % stateTree.getNumColors());
 
         super.update(delta, stateTree);
+    }
+
+    @Override
+    public void renderEntities(Graphics g) {
+        for (IEntity entity : entities) {
+            Rectangle entRect = entity.getRect();
+
+            if (entity.getColor() != stateTree.getActiveColor() &&
+                    entRect.getX() + entRect.getWidth() > 0 &&
+                    entRect.getX() < Main.GAME_WIDTH
+                    ) {
+                entity.render(g);
+            }
+        }
     }
 
 

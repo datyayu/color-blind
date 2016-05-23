@@ -68,6 +68,11 @@ public class GameStateTree {
         return colorsInventory;
     }
 
+
+    public int getNumColors() {
+        return colorsInventory.size();
+    }
+
     public void setActiveColor(int index) {
         if (index > -1 && index < colorsInventory.size()) {
             activeColor = index;

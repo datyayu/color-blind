@@ -188,7 +188,7 @@ public abstract class PlayState extends State {
         g.drawString("TIME: " + stateTree.getTimeString(), 30, 30);
     }
 
-    private void renderEntities(Graphics g) {
+    public void renderEntities(Graphics g) {
         for (IEntity entity : entities) {
             Rectangle entRect = entity.getRect();
 
