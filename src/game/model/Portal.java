@@ -6,15 +6,13 @@ import game.utils.CollisionType;
 
 import java.awt.*;
 
-public class Portal implements IEntity {
+public class Portal implements IObject {
     private boolean reached;
     private int x;
     private int y;
     private int width;
     private int height;
     private Rectangle rect;
-    private int offsetY;
-    private int offsetX;
 
     public Portal(int x, int y, int width, int height) {
         this.x = x;
@@ -55,8 +53,8 @@ public class Portal implements IEntity {
     }
 
     @Override
-    public CollisionType checkForCollisions(Player player) {
-        if (player.getRect().intersects(rect)) {
+    public CollisionType checkForCollisions(Entity entity) {
+       if (entity.getType() == "Player" && entity.getRect().intersects(rect)) {
             reached = true;
             return CollisionType.LEVEL_COMPLETE;
         }

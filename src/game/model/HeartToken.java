@@ -6,8 +6,7 @@ import game.utils.CollisionType;
 import java.awt.*;
 
 
-public class HeartToken implements IEntity {
-
+public class HeartToken implements IObject, IToken {
     private final Rectangle rect;
     private int x;
     private int y;
@@ -24,6 +23,7 @@ public class HeartToken implements IEntity {
         this.y = y + height/4;
         this.width = width/2;
         this.height = height/2;
+        this.color = color;
 
         isAvailable = true;
         rect = new Rectangle();
@@ -60,10 +60,10 @@ public class HeartToken implements IEntity {
     }
 
     @Override
-    public CollisionType checkForCollisions(Player player) {
+    public CollisionType checkForCollisions(Entity entity) {
         if (!isAvailable) return CollisionType.NULL;
 
-        if (player.getRect().intersects(rect)) {
+        if (entity.getType() == "Player" && entity.getRect().intersects(rect)) {
             isAvailable = false;
             return CollisionType.ADD_LIFE;
         }
@@ -71,14 +71,17 @@ public class HeartToken implements IEntity {
         return CollisionType.NULL;
     }
 
+    @Override
     public boolean isAvailable() {
         return isAvailable;
     }
 
+    @Override
     public void setAsObtained() {
         obtained = true;
     }
 
+    @Override
     public boolean wasObtained() {
         return obtained;
     }

@@ -1,14 +1,12 @@
 package game.utils;
 
-import game.model.IEntity;
+import game.model.IObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by datyayu on 16.05.16.
- */
+
 public class LevelMap {
-    private ArrayList<IEntity> entities;
+    private ArrayList<IObject> objects;
     private int height;
     private int width;
 
@@ -16,15 +14,14 @@ public class LevelMap {
         this.width = width;
         this.height = height;
 
-        entities = new ArrayList<IEntity>();
+        objects = new ArrayList<IObject>();
     }
 
-    public void addEntity(IEntity entity) {
-        entities.add(entity);
+    public void addObject(IObject object) { objects.add(object);
     }
 
-    public ArrayList<IEntity> getEntities() {
-        return entities;
+    public ArrayList<IObject> getObjects() {
+        return objects;
     }
 
     public int getHeight() {

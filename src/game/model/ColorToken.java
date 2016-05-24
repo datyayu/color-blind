@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by datyayu on 16.05.23.
  */
-public class ColorToken implements IEntity {
+public class ColorToken implements IObject {
 
     private final Rectangle rect;
     private int x;
@@ -65,10 +65,10 @@ public class ColorToken implements IEntity {
     }
 
     @Override
-    public CollisionType checkForCollisions(Player player) {
+    public CollisionType checkForCollisions(Entity entity) {
         if (!isAvailable) return CollisionType.NULL;
 
-        if (player.getRect().intersects(rect)) {
+        if (entity.getType() == "Player" && entity.getRect().intersects(rect)) {
             isAvailable = false;
             return CollisionType.NEW_COLOR;
         }

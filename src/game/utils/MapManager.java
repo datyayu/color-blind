@@ -14,7 +14,7 @@ public class MapManager {
     public static final int TILE_SIZE = (Main.GAME_HEIGHT * 2 / 20);
 
     public static LevelMap loadMap(String filename) {
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         int width = 0;
         int height = 0;
 
@@ -22,7 +22,8 @@ public class MapManager {
 
         // Read map file.
         while (true) {
-            String line = null;
+            String line;
+
             try {
                 line = reader.readLine();
 
@@ -59,31 +60,31 @@ public class MapManager {
 
                 switch (ch) {
                     case 'X':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_WHITE));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_WHITE));
                     case '|':
                     case '0':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLACK));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLACK));
                         break;
                     case '1':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_GREEN));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_GREEN));
                         break;
                     case '2':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
                         break;
                     case '3':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
                         break;
                     case '4':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_ORANGE));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_ORANGE));
                         break;
                     case '5':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_YELLOW));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_YELLOW));
                         break;
                     case '6':
-                        map.addEntity(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_PURPLE));
+                        map.addObject(new Block(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_PURPLE));
                         break;
                     case 'W':
-                        map.addEntity(
+                        map.addObject(
                                 new Portal(
                                         x*TILE_SIZE + (TILE_SIZE / 4),
                                         y*TILE_SIZE + (TILE_SIZE / 4),
@@ -93,19 +94,24 @@ public class MapManager {
                         );
                         break;
                     case 'A':
-                        map.addEntity(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        map.addObject(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
                         break;
                     case 'V':
-                        map.addEntity(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        map.addObject(new Spike(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
                         break;
 
                     /* COLORS */
                     case 'R':
-                        map.addEntity(new ColorToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
+                        map.addObject(new ColorToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_RED));
                         break;
 
                     case 'H':
-                        map.addEntity(new HeartToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        map.addObject(new HeartToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        break;
+
+                    case 'Z':
+                        map.addObject(new Enemy(x*TILE_SIZE, y*TILE_SIZE - TILE_SIZE, 60, 80));
+                        break;
 
                     default:
                         break;

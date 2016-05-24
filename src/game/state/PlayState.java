@@ -13,18 +13,18 @@ import java.util.ArrayList;
 
 
 public abstract class PlayState extends State {
-    private final int PLAYER_HEIGHT = 80;
-    private final int PLAYER_WIDTH = 60;
-    private final int GROUND_HEIGHT = 150;
+    protected final int PLAYER_HEIGHT = 80;
+    protected final int PLAYER_WIDTH = 60;
+    protected final int GROUND_HEIGHT = 150;
 
-    public Player player;
-    public ArrayList<IEntity> entities;
-    public int activeColor;
-    public LevelMap map;
-    public GameStateTree stateTree;
+    protected Player player;
+    protected ArrayList<IObject> objects;
+    protected int activeColor;
+    protected LevelMap map;
+    protected GameStateTree stateTree;
 
-    private int offsetX;
-    private int offsetY;
+    protected int offsetX;
+    protected int offsetY;
 
     public abstract void onLevelComplete();
     public abstract void onPlayerDeath();
@@ -40,11 +40,11 @@ public abstract class PlayState extends State {
                 stateTree.getActiveColor(),
                 map.getHeight()
         );
-        entities = new ArrayList<>();
+        objects = new ArrayList<>();
         offsetX = 0;
         offsetY = 0;
 
-        entities = map.getEntities();
+        objects = map.getObjects();
     }
 
     @Override
@@ -71,42 +71,51 @@ public abstract class PlayState extends State {
 
         stateTree.addTime(delta);
         stateTree.setActiveColor(activeColor);
-        player.setColor(stateTree.getActiveColor());
-        player.update(delta, entities, offsetX, offsetY);
-        offsetX = updateOffsetX();
-        offsetY = updateOffsetY();
 
-        updateEntities(delta);
+        player.setColor(stateTree.getActiveColor());
+        player.update(delta, offsetX, offsetY);
+
+        updateOffsetX();
+        updateOffsetY();
+
+        updateObjects(delta);
+        player.checkForCollisions(objects);
     }
 
-    private int updateOffsetX() {
+    private void updateOffsetX() {
         int newOffset = (Main.GAME_WIDTH / 2) - player.getX() - MapManager.TILE_SIZE;
         newOffset = Math.min(newOffset, 0);
         newOffset = Math.max(newOffset, Main.GAME_WIDTH - map.getWidth()*MapManager.TILE_SIZE);
 
-        return newOffset;
+        offsetX = newOffset;
     }
 
-    private int updateOffsetY() {
+    private void updateOffsetY() {
         int newOffset = (Main.GAME_HEIGHT / 2) - player.getY() - MapManager.TILE_SIZE;
         newOffset = Math.min(newOffset, 0);
         newOffset = Math.max(newOffset, Main.GAME_HEIGHT - map.getHeight()*MapManager.TILE_SIZE);
 
-        return newOffset;
+        offsetY = newOffset;
     }
 
-    private void updateEntities(float delta) {
-        for (IEntity entity : entities) {
-            entity.update(delta, offsetX, offsetY);
+    private void updateObjects(float delta) {
+        for (IObject object : objects) {
+            object.update(delta, offsetX, offsetY);
 
-            checkEdgeCasesOnEntity(entity);
+            checkEdgeCasesOnObject(object);
         }
     }
 
-    private void checkEdgeCasesOnEntity(IEntity entity) {
-        switch (entity.getType()) {
+    private void checkEdgeCasesOnObject(IObject object) {
+        switch (object.getType()) {
+            case "Enemy":
+                Enemy enemy = (Enemy) object;
+                enemy.setPlayerColor(player.getColor());
+                enemy.checkForCollisions(objects);
+                break;
+
             case "Portal":
-                Portal portal = (Portal) entity;
+                Portal portal = (Portal) object;
 
                 if (portal.hasWon()) {
                     onLevelComplete();
@@ -115,7 +124,7 @@ public abstract class PlayState extends State {
                 break;
 
             case "ColorToken":
-                ColorToken cToken = (ColorToken) entity;
+                IToken cToken = (IToken) object;
 
                 if (!cToken.isAvailable() && !cToken.wasObtained()) {
                     cToken.setAsObtained();
@@ -125,7 +134,7 @@ public abstract class PlayState extends State {
                 break;
 
             case "HeartToken":
-                HeartToken hToken = (HeartToken) entity;
+                IToken hToken = (IToken) object;
 
                 if (!hToken.isAvailable() && !hToken.wasObtained()) {
                     hToken.setAsObtained();
@@ -145,7 +154,7 @@ public abstract class PlayState extends State {
         g.setColor(stateTree.getActiveColor());
         g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
 
-        renderEntities(g);
+        renderObjects(g);
 
         player.render(g);
         renderHUD(g);
@@ -188,14 +197,14 @@ public abstract class PlayState extends State {
         g.drawString("TIME: " + stateTree.getTimeString(), 30, 30);
     }
 
-    public void renderEntities(Graphics g) {
-        for (IEntity entity : entities) {
-            Rectangle entRect = entity.getRect();
+    public void renderObjects(Graphics g) {
+        for (IObject object : objects) {
+            Rectangle objRect = object.getRect();
 
-            if (entity.getColor() != stateTree.getActiveColor() &&
-                    entRect.getX() + entRect.getWidth() > 0 &&
-                    entRect.getX() < Main.GAME_WIDTH) {
-                entity.render(g);
+            if (object.getColor() != stateTree.getActiveColor() &&
+                    objRect.getX() + objRect.getWidth() > 0 &&
+                    objRect.getX() < Main.GAME_WIDTH) {
+                object.render(g);
             }
         }
     }

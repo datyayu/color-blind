@@ -5,7 +5,7 @@ import game.utils.CollisionType;
 
 import java.awt.*;
 
-public class Spike implements IEntity {
+public class Spike implements IObject {
     private int x;
     private int y;
     private int width;
@@ -13,8 +13,6 @@ public class Spike implements IEntity {
 
     private Color color;
     private Rectangle rect;
-    private int offsetX;
-    private int offsetY;
 
 
     public Spike(int x, int y, int width, int height, Color color) {
@@ -58,14 +56,15 @@ public class Spike implements IEntity {
     }
 
     @Override
-    public CollisionType checkForCollisions(Player player) {
-        Rectangle playerRect = player.getRect();
+    public CollisionType checkForCollisions(Entity entity) {
+        Rectangle playerRect = entity.getRect();
 
-        if (player.getColor() == color) {
+        if (entity.getColor() == color) {
             return CollisionType.NULL;
         }
 
-        if (playerRect.intersects(rect.getX(), rect.getY() + offsetY, rect.getWidth(), rect.getHeight())) {
+        if (entity.getType() == "Player" &&
+                playerRect.intersects(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight())) {
             return CollisionType.DEATH;
         }
 

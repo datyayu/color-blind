@@ -6,7 +6,7 @@ import game.utils.CollisionType;
 import java.awt.*;
 
 
-public interface IEntity {
+public interface IObject {
     public void update(float delta, int offsetX, int offsetY);
     public void render(Graphics g);
 
@@ -14,5 +14,5 @@ public interface IEntity {
     public Rectangle getRect();
     public String getType();
 
-    CollisionType checkForCollisions(Player player);
+    CollisionType checkForCollisions(Entity entity);
 }

@@ -4,7 +4,7 @@ import game.utils.CollisionType;
 
 import java.awt.*;
 
-public class Block implements IEntity {
+public class Block implements IObject {
     private int x;
     private int y;
     private int width;
@@ -52,10 +52,11 @@ public class Block implements IEntity {
     }
 
     @Override
-    public CollisionType checkForCollisions(Player player) {
-        Rectangle playerRect = player.getRect();
+    public CollisionType checkForCollisions(Entity entity) {
+        Rectangle playerRect = entity.getRect();
+        Color entityColor = entity.getType() == "Enemy" ? ((Enemy) entity).getPlayerColor() : entity.getColor();
 
-        if (player.getColor() == color) {
+        if (entityColor == color) {
             return CollisionType.NULL;
         }
 
@@ -65,13 +66,13 @@ public class Block implements IEntity {
 
 
         // Left hit
-        if ((playerRect.getY() + player.getHeight() > rect.getY() + 15) &&
-                (playerRect.getX() + player.getWidth() < rect.getX() + (width/2))) {
+        if ((playerRect.getY() + entity.getHeight() > rect.getY() + 15) &&
+                (playerRect.getX() + entity.getWidth() < rect.getX() + (width/2))) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
-        if ((playerRect.getY() + player.getHeight() > rect.getY() + 15) &&
+        if ((playerRect.getY() + entity.getHeight() > rect.getY() + 15) &&
                 (playerRect.getX() > rect.getX() + (width/2))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }

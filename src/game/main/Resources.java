@@ -43,6 +43,7 @@ public class Resources {
     public static Font timeFont, gameOverTimeFont;
 
     public static FrameAnimation jumpRAnimation, jumpLAnimation, runRAnimation, runLAnimation;
+    public static BufferedImage zombieRSpriteSheet, zombieLSpriteSheet;
 
 
     public static BufferedReader loadMap(String filename) {
@@ -93,6 +94,9 @@ public class Resources {
         jumpLAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/jumpL.png"), .4f, 0, 7, false);
         runRAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/runR.png"), .3f, 0, 7, true);
         runLAnimation = FrameAnimation.getAnimationFromSpriteSheet(loadImage("animations/runL.png"), .3f, 0, 7, true);
+
+        zombieLSpriteSheet = loadImage("animations/zombieR.png");
+        zombieRSpriteSheet = loadImage("animations/zombieL.png");
     }
 
     private static AudioClip loadSound(String filename) {
