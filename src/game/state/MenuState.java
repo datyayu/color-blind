@@ -1,6 +1,7 @@
 package game.state;
 
 import game.levels.LevelOne;
+import game.levels.LevelOneX;
 import game.main.GameStateTree;
 import game.main.Main;
 import game.utils.RNG;
@@ -75,15 +76,16 @@ public class MenuState extends State {
     private void drawMenu(Graphics g) {
         if (selectedOption == 0) {
             g.drawImage(Resources.mainMenuPlayImg, 0, 0, null);
-        } else if (selectedOption == 1 && stateTree.hasSound()) {
-            g.drawImage(Resources.mainMenuSoundOnImg, 0, 0, null);
         } else if (selectedOption == 1) {
+            g.drawImage(Resources.mainMenuHardModeImg, 0, 0, null);
+        } else if (selectedOption == 2 && stateTree.hasSound()) {
+            g.drawImage(Resources.mainMenuSoundOnImg, 0, 0, null);
+        } else if (selectedOption == 2) {
             g.drawImage(Resources.mainMenuSoundOffImg, 0, 0, null);
         } else {
             g.drawImage(Resources.mainMenuExitImg, 0, 0, null);
         }
     }
-
 
     @Override
     public void onKeyPress(KeyEvent e) {
@@ -91,11 +93,11 @@ public class MenuState extends State {
 
         switch(key) {
             case KeyEvent.VK_DOWN:
-                selectedOption = selectedOption == 2 ? 0 : selectedOption + 1;
+                selectedOption = selectedOption == 3 ? 0 : selectedOption + 1;
                 break;
 
             case KeyEvent.VK_UP:
-                selectedOption = selectedOption == 0 ? 2 : selectedOption - 1;
+                selectedOption = selectedOption == 0 ? 3 : selectedOption - 1;
                 break;
 
             case KeyEvent.VK_ENTER:
@@ -103,6 +105,8 @@ public class MenuState extends State {
                 if (selectedOption == 0) {
                     transitionToState(new LevelOne());
                 } else if (selectedOption == 1) {
+                    transitionToState(new LevelOneX());
+                } else if (selectedOption == 2) {
                     stateTree.setHasSound(!stateTree.hasSound());
                 } else {
                     Main.game.exitGame();

@@ -32,9 +32,10 @@ public class Resources {
     public static Image
             loadingImg,
             mainMenuPlayImg,
-            mainMenuExitImg,
+            mainMenuHardModeImg,
             mainMenuSoundOffImg,
             mainMenuSoundOnImg,
+            mainMenuExitImg,
             pauseMenuImg,
             gameOverImg;
 
@@ -70,9 +71,10 @@ public class Resources {
     private static void loadScreenImages() {
         loadingImg = loadImage("screens/loading.png");
         mainMenuPlayImg = loadImage("screens/MainMenuPlay.png");
-        mainMenuExitImg = loadImage("screens/MainMenuExit.png");
+        mainMenuHardModeImg = loadImage("screens/MainMenuHardMode.png");
         mainMenuSoundOffImg = loadImage("screens/MainMenuSoundOff.png");
         mainMenuSoundOnImg = loadImage("screens/MainMenuSoundOn.png");
+        mainMenuExitImg = loadImage("screens/MainMenuExit.png");
         pauseMenuImg = loadImage("screens/PauseMenu.png");
         gameOverImg = loadImage("screens/GameOver.png");
     }

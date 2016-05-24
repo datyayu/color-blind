@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by datyayu on 16.05.23.
  */
-public class ColorToken implements IObject {
+public class ColorToken implements IObject, IToken {
 
     private final Rectangle rect;
     private int x;

@@ -1,8 +1,6 @@
 package game.levels;
 
 import game.main.GameStateTree;
-import game.state.GameOverState;
-import game.state.MenuState;
 import game.state.PlayState;
 import game.main.Resources;
 import game.utils.MapManager;
@@ -23,7 +21,7 @@ public class LevelThree extends PlayState {
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new LevelX());
+        transitionToState(new LevelOneX());
     }
 
     @Override

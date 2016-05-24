@@ -5,12 +5,9 @@ import game.main.GameStateTree;
 import game.main.Resources;
 import game.state.GameOverState;
 import game.state.HardPlayState;
-import game.state.PlayState;
 import game.utils.MapManager;
 
-import java.awt.event.KeyEvent;
-
-public class LevelX extends HardPlayState {
+public class LevelOneX extends HardPlayState {
     @Override
     public void init(GameStateTree stateTree) {
         map = MapManager.loadMap("level2");
@@ -31,6 +28,6 @@ public class LevelX extends HardPlayState {
 
     @Override
     public void onPlayerDeath() {
-        transitionToState(new LevelX());
+        transitionToState(new LevelOneX());
     }
 }
