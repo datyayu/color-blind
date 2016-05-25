@@ -2,10 +2,10 @@ package game.state;
 
 import game.main.GameStateTree;
 import game.main.Resources;
+import game.state.base.State;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 
 public class LoadState extends State {

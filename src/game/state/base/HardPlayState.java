@@ -1,7 +1,8 @@
-package game.state;
+package game.state.base;
 
 
 import game.main.GameStateTree;
+import game.state.base.PlayState;
 
 import java.awt.event.KeyEvent;
 

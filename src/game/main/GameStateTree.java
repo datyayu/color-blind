@@ -59,8 +59,10 @@ public class GameStateTree {
 
     public void setHasSound(boolean hasSound) {
         if (hasSound) {
+            Resources.setGlobalVolume(.5);
             song.play();
         } else {
+            Resources.setGlobalVolume(0);
             song.stop();
         }
 
@@ -68,7 +70,8 @@ public class GameStateTree {
     }
 
     public void setSong(AudioClip song) {
-        if (this.song != song || !this.song.isPlaying()) {
+        if (hasSound() &&
+                (this.song != song || !this.song.isPlaying())) {
             this.song = song;
 
             Resources.stopAllSounds();

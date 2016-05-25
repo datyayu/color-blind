@@ -3,8 +3,7 @@ package game.levels;
 
 import game.main.GameStateTree;
 import game.main.Resources;
-import game.state.GameOverState;
-import game.state.HardPlayState;
+import game.state.base.HardPlayState;
 import game.utils.MapManager;
 
 public class LevelOneX extends HardPlayState {

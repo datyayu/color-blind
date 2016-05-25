@@ -2,7 +2,7 @@ package game.levels;
 
 import game.main.GameStateTree;
 import game.state.GameCompletedState;
-import game.state.PlayState;
+import game.state.base.PlayState;
 import game.main.Resources;
 import game.utils.MapManager;
 

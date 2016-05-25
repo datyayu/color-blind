@@ -1,10 +1,13 @@
-package game.state;
+package game.state.base;
 
 import game.main.GameStateTree;
 import game.model.*;
 import game.model.base.Enemy;
 import game.model.base.IObject;
 import game.model.base.IToken;
+import game.state.GameOverState;
+import game.state.MenuState;
+import game.state.base.State;
 import game.utils.LevelMap;
 import game.main.Main;
 import game.utils.MapManager;

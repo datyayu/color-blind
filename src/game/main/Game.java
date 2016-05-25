@@ -1,7 +1,7 @@
 package game.main;
 
 import game.state.LoadState;
-import game.state.State;
+import game.state.base.State;
 import game.utils.InputHandler;
 
 import javax.swing.*;
