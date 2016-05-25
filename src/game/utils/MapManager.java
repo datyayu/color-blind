@@ -107,7 +107,7 @@ public class MapManager {
                         break;
 
                     case 'H':
-                        map.addObject(new HeartToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE, Resources.COLOR_BLUE));
+                        map.addObject(new HeartToken(x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE, TILE_SIZE));
                         break;
 
                     case 'Z':

@@ -16,17 +16,15 @@ public class HeartToken implements IObject, IToken {
     private int width;
     private int height;
 
-    private Color color;
     private boolean isAvailable;
     private boolean obtained;
 
 
-    public HeartToken(int x, int y, int width, int height, Color color) {
+    public HeartToken(int x, int y, int width, int height) {
         this.x = x + width/4;
         this.y = y + height/4;
         this.width = width/2;
         this.height = height/2;
-        this.color = color;
 
         isAvailable = true;
         rect = new Rectangle();
@@ -43,13 +41,12 @@ public class HeartToken implements IObject, IToken {
     public void render(Graphics g) {
         if (!isAvailable) return;
 
-        g.setColor(color);
         g.drawImage(Resources.heartImg, (int) rect.getX(), (int) rect.getY(), null);
     }
 
     @Override
     public Color getColor() {
-        return color;
+        return Resources.COLOR_WHITE;
     }
 
     @Override
