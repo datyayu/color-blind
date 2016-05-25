@@ -33,7 +33,7 @@ public class Enemy extends Entity {
 //        if (currentStep > 250 || currentStep < -250) {
 //            lastDirection = -lastDirection;
 //        }
-        System.out.println("PRE: \t| LD: " + lastDirection + "\t| bounce" + bounce + "\t| VelX: " + velX);
+//        System.out.println("PRE: \t| LD: " + lastDirection + "\t| bounce" + bounce + "\t| VelX: " + velX);
 
 
         zombieRAnimation.update(delta);
@@ -49,7 +49,7 @@ public class Enemy extends Entity {
             bounce = 0;
         }
 
-        System.out.println("POST: \t| LD: " + lastDirection + "\t| bounce" + bounce + "\t| VelX: " + velX);
+//        System.out.println("POST: \t| LD: " + lastDirection + "\t| bounce" + bounce + "\t| VelX: " + velX);
     }
 
     @Override

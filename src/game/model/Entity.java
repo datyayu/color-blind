@@ -134,16 +134,15 @@ public abstract class Entity implements IObject {
 
             switch (collision) {
                 case BLOCK_TOP:
+                    velY = 0;
                     isGrounded = true;
                     canJump = true;
-                    y = (int) (object.getRect().getY() - offsetY - height + 1);
-                    velY = 0;
+                    y = (int) (object.getRect().getY() - offsetY - height + 2);
                     break;
 
                 case BLOCK_BOTTOM:
-                    Rectangle entRect = object.getRect();
                     velY = 0;
-                    y = (int) (entRect.getY() - offsetY + entRect.getHeight());
+                    y = (int) (object.getRect().getY() - offsetY + object.getRect().getHeight());
                     isGrounded = false;
                     break;
 

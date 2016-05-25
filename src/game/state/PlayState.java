@@ -6,6 +6,7 @@ import game.utils.LevelMap;
 import game.main.Main;
 import game.utils.MapManager;
 import game.main.Resources;
+import javafx.scene.media.AudioClip;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,8 @@ public abstract class PlayState extends State {
     protected int offsetX;
     protected int offsetY;
 
+    private int pauseMenuOption;
+
     public abstract void onLevelComplete();
     public abstract void onPlayerDeath();
 
@@ -43,6 +46,7 @@ public abstract class PlayState extends State {
         objects = new ArrayList<>();
         offsetX = 0;
         offsetY = 0;
+        pauseMenuOption = 0;
 
         objects = map.getObjects();
     }
@@ -73,11 +77,12 @@ public abstract class PlayState extends State {
         stateTree.setActiveColor(activeColor);
 
         player.setColor(stateTree.getActiveColor());
-        player.update(delta, offsetX, offsetY);
 
         updateOffsetX();
         updateOffsetY();
 
+
+        player.update(delta, offsetX, offsetY);
         updateObjects(delta);
         player.checkForCollisions(objects);
     }
@@ -148,7 +153,6 @@ public abstract class PlayState extends State {
         }
     }
 
-
     @Override
     public void render(Graphics g) {
         g.setColor(stateTree.getActiveColor());
@@ -212,22 +216,48 @@ public abstract class PlayState extends State {
     private void renderPauseMenu(Graphics g) {
         g.setColor(Resources.COLOR_PAUSE_OVERLAY);
         g.fillRect(0, 0, Main.GAME_WIDTH, Main.GAME_HEIGHT);
-        g.drawImage(Resources.pauseMenuImg, 0, 0, null);
+
+        switch(pauseMenuOption) {
+            case 0:
+                g.drawImage(Resources.pauseMenuResumeImg, 0, 0, null);
+                break;
+
+            case 1:
+                if (stateTree.hasSound()) {
+                    g.drawImage(Resources.pauseMenuSoundOnImg, 0, 0, null);
+                } else {
+                    g.drawImage(Resources.pauseMenuSoundOffImg, 0, 0, null);
+                }
+                break;
+
+            case 2:
+                g.drawImage(Resources.pauseMenuToMainMenu, 0, 0, null);
+                break;
+
+            case 3:
+                g.drawImage(Resources.pauseMenuExitImg, 0, 0, null);
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     @Override
     public void onKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_ESCAPE) {
-            stateTree.togglePause();
-        }
-
         if (stateTree.isGamePaused()) {
+            handlePauseKeyPress(key);
             return;
         }
 
         switch (key) {
+            case KeyEvent.VK_ESCAPE:
+                stateTree.togglePause();
+                break;
+
             case KeyEvent.VK_1:
             case KeyEvent.VK_NUMPAD1:
                 activeColor = 0;
@@ -274,6 +304,50 @@ public abstract class PlayState extends State {
         }
 
     }
+
+
+    protected void handlePauseKeyPress(int key) {
+        switch (key) {
+            case KeyEvent.VK_ESCAPE:
+                stateTree.togglePause();
+                pauseMenuOption = 0;
+                break;
+
+            case KeyEvent.VK_UP:
+                if (pauseMenuOption == 0) {
+                    pauseMenuOption = 3;
+                } else {
+                    pauseMenuOption -= 1;
+                }
+                break;
+
+            case KeyEvent.VK_DOWN :
+                if (pauseMenuOption == 3) {
+                    pauseMenuOption = 0;
+                } else {
+                    pauseMenuOption += 1;
+                }
+                break;
+
+            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_ENTER:
+                if (pauseMenuOption == 0) {
+                    stateTree.togglePause();
+                } else if (pauseMenuOption == 1) {
+                    stateTree.setHasSound(!stateTree.hasSound());
+                } else if (pauseMenuOption == 2) {
+                    stateTree.resumeGame();
+                    transitionToState(new MenuState());
+                } else if (pauseMenuOption == 3) {
+                    Main.game.exitGame();
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
 
     @Override
     public void onKeyRelease(KeyEvent e) {

@@ -1,14 +1,15 @@
 package game.main;
 
 
-import javafx.util.converter.TimeStringConverter;
 
+import javafx.scene.media.AudioClip;
+
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.sql.Time;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Timer;
 
 public class GameStateTree {
     // Sound is allowed
@@ -27,6 +28,9 @@ public class GameStateTree {
     private boolean gamePaused;
     // Time in the current run.
     private long time;
+
+    // Current song playing.
+    private AudioClip song;
 
 
     public GameStateTree() {
@@ -54,7 +58,22 @@ public class GameStateTree {
     }
 
     public void setHasSound(boolean hasSound) {
+        if (hasSound) {
+            song.play();
+        } else {
+            song.stop();
+        }
+
         this.sound = hasSound;
+    }
+
+    public void setSong(AudioClip song) {
+        if (this.song != song) {
+            Resources.stopAllSounds();
+            song.play();
+
+            this.song = song;
+        }
     }
 
 
@@ -74,8 +93,10 @@ public class GameStateTree {
     }
 
     public void setActiveColor(int index) {
-        if (index > -1 && index < colorsInventory.size()) {
+        if (index > -1 && index < colorsInventory.size() && index != activeColor) {
             activeColor = index;
+            Resources.changeColorSound.stop();
+            Resources.changeColorSound.play();
         }
     }
 
@@ -162,6 +183,7 @@ public class GameStateTree {
     public void resetGameOver() {
         gameOver = false;
     }
+
 
 
     /********************************

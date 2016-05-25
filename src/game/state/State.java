@@ -24,4 +24,6 @@ public abstract class State {
     public void transitionToState(State nextState) {
         Main.game.setCurrentState(nextState);
     }
+
+
 }

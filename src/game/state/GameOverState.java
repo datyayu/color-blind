@@ -12,6 +12,12 @@ public class GameOverState extends MenuState {
     private long time = 0;
 
     @Override
+    public void init(GameStateTree stateTree) {
+        super.init(stateTree);
+        stateTree.setSong(Resources.gameOverSong);
+    }
+
+    @Override
     public void update(float delta, GameStateTree stateTree) {
         super.update(delta, stateTree);
         time += delta*1000L;

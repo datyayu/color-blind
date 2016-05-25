@@ -1,6 +1,7 @@
 package game.levels;
 
 import game.main.GameStateTree;
+import game.state.GameCompletedState;
 import game.state.PlayState;
 import game.main.Resources;
 import game.utils.MapManager;
@@ -10,6 +11,8 @@ public class LevelThree extends PlayState {
     @Override
     public void init(GameStateTree stateTree) {
         map = MapManager.loadMap("level3");
+
+        stateTree.setSong(Resources.level3Song);
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
@@ -21,7 +24,7 @@ public class LevelThree extends PlayState {
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new LevelOneX());
+        transitionToState(new GameCompletedState());
     }
 
     @Override

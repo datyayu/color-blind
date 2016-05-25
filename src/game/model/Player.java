@@ -67,6 +67,15 @@ public class Player extends Entity {
         super.update(delta, offsetX, offsetY);
     }
 
+    @Override
+    public void jump() {
+        if (isGrounded) {
+            Resources.jumpSound.stop();
+            Resources.jumpSound.play();
+        }
+
+        super.jump();
+    }
 
     @Override
     public void render(Graphics g) {

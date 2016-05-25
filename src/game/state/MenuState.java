@@ -17,13 +17,13 @@ public class MenuState extends State {
     private int selectedOption = 0;
     public GameStateTree stateTree;
 
-    private final int MAX_STEP = 3;
+    private final int MAX_STEP = 2;
     private final int BOUNDS_PADDING = 20;
-
 
     @Override
     public void init(GameStateTree stateTree) {
         this.stateTree = stateTree;
+        stateTree.setSong(Resources.menuSong);
 
         red_step = RNG.getRandomIntBetween(1, MAX_STEP);
         blue_step = RNG.getRandomIntBetween(1, MAX_STEP);

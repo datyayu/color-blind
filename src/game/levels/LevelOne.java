@@ -10,6 +10,7 @@ public class LevelOne extends PlayState {
     @Override
     public void init(GameStateTree stateTree) {
         map = MapManager.loadMap("level1");
+        stateTree.setSong(Resources.level1Song);
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,

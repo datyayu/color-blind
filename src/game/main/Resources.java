@@ -5,7 +5,7 @@ import game.animation.FrameAnimation;
 import sun.applet.AppletAudioClip;
 
 import javax.imageio.ImageIO;
-import java.applet.AudioClip;
+import javafx.scene.media.AudioClip;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;
@@ -31,13 +31,33 @@ public class Resources {
 
     public static Image
             loadingImg,
-            mainMenuPlayImg,
-            mainMenuHardModeImg,
-            mainMenuSoundOffImg,
-            mainMenuSoundOnImg,
-            mainMenuExitImg,
-            pauseMenuImg,
+            gameClearedImg,
             gameOverImg;
+
+    public static Image
+        mainMenuPlayImg,
+        mainMenuHardModeImg,
+        mainMenuSoundOffImg,
+        mainMenuSoundOnImg,
+        mainMenuExitImg;
+
+    public static Image
+        pauseMenuResumeImg,
+        pauseMenuSoundOffImg,
+        pauseMenuSoundOnImg,
+        pauseMenuToMainMenu,
+        pauseMenuExitImg;
+
+    public static AudioClip
+        jumpSound,
+        changeColorSound;
+
+    public static AudioClip
+        menuSong,
+        gameOverSong,
+        level1Song,
+        level2Song,
+        level3Song;
 
     public static Image heartImg;
 
@@ -62,10 +82,14 @@ public class Resources {
         loadScreenImages();
         loadColors();
         loadAnimations();
+        loadSounds();
+        loadSongs();
 
         heartImg = loadImage("heart.png");
         timeFont = new Font("SansSerif", Font.BOLD, 25);
         gameOverTimeFont = new Font("SansSerif", Font.BOLD, 50);
+
+        setGlobalVolume(.2d);
     }
 
     private static void loadScreenImages() {
@@ -75,8 +99,13 @@ public class Resources {
         mainMenuSoundOffImg = loadImage("screens/MainMenuSoundOff.png");
         mainMenuSoundOnImg = loadImage("screens/MainMenuSoundOn.png");
         mainMenuExitImg = loadImage("screens/MainMenuExit.png");
-        pauseMenuImg = loadImage("screens/PauseMenu.png");
+        pauseMenuResumeImg = loadImage("screens/PauseMenuResume.png");
+        pauseMenuSoundOffImg = loadImage("screens/PauseMenuSoundOff.png");
+        pauseMenuSoundOnImg = loadImage("screens/PauseMenuSoundOn.png");
+        pauseMenuToMainMenu = loadImage("screens/PauseMenuToMainMenu.png");
+        pauseMenuExitImg = loadImage("screens/PauseMenuExit.png");
         gameOverImg = loadImage("screens/GameOver.png");
+        gameClearedImg = loadImage("screens/GameCleared.png");
     }
 
     private static void loadColors() {
@@ -101,9 +130,50 @@ public class Resources {
         zombieRSpriteSheet = loadImage("animations/zombieL.png");
     }
 
+    private static void loadSounds() {
+        jumpSound = loadSound("effects/jump.wav");
+        changeColorSound = loadSound("effects/colorChange.wav");
+    }
+
+    private static void loadSongs() {
+        menuSong = loadSound("music/early-morning-may.mp3");
+        gameOverSong = loadSound("music/7-times.mp3");
+        level1Song = loadSound("music/piano-wire.mp3");
+        level2Song = loadSound("music/magnetic-moment.mp3");
+        level3Song = loadSound("music/sidetracked.mp3");
+
+        menuSong.setCycleCount(AudioClip.INDEFINITE);
+        gameOverSong.setCycleCount(AudioClip.INDEFINITE);
+        level1Song.setCycleCount(AudioClip.INDEFINITE);
+        level2Song.setCycleCount(AudioClip.INDEFINITE);
+        level3Song.setCycleCount(AudioClip.INDEFINITE);
+    }
+
+    public static void setGlobalVolume(double volume) {
+        jumpSound.setVolume(volume);
+        changeColorSound.setVolume(volume);
+        menuSong.setVolume(volume*.3);
+        gameOverSong.setVolume(volume*.3);
+        level1Song.setVolume(volume*.3);
+        level2Song.setVolume(volume*.3);
+        level3Song.setVolume(volume*.3);
+    }
+
+    public static void stopAllSounds() {
+        jumpSound.stop();
+        changeColorSound.stop();
+        menuSong.stop();
+        gameOverSong.stop();
+        level1Song.stop();
+        level2Song.stop();
+        level3Song.stop();
+    }
+
+
+
     private static AudioClip loadSound(String filename) {
         URL fileURL = Resources.class.getResource("/resources/audio/" + filename);
-        return new AppletAudioClip(fileURL);
+        return new AudioClip(fileURL.toString());
     }
 
     private static BufferedImage loadImage(String filename) {

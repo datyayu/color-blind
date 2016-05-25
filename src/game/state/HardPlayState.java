@@ -31,11 +31,8 @@ abstract public class HardPlayState extends PlayState {
     public void onKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_ESCAPE) {
-            stateTree.togglePause();
-        }
-
         if (stateTree.isGamePaused()) {
+            handlePauseKeyPress(key);
             return;
         }
 
@@ -50,6 +47,10 @@ abstract public class HardPlayState extends PlayState {
 
             case KeyEvent.VK_UP:
                 player.jump();
+                break;
+
+            case KeyEvent.VK_ESCAPE:
+                stateTree.togglePause();
                 break;
 
             default:
