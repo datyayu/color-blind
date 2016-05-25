@@ -1,6 +1,6 @@
 package game.utils;
 
-import game.model.IObject;
+import game.model.base.IObject;
 
 import java.util.ArrayList;
 

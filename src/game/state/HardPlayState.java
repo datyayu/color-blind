@@ -2,10 +2,7 @@ package game.state;
 
 
 import game.main.GameStateTree;
-import game.main.Main;
-import game.model.IObject;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 

@@ -1,4 +1,4 @@
-package game.model;
+package game.model.base;
 
 import game.utils.CollisionType;
 
@@ -154,7 +154,7 @@ public abstract class Entity implements IObject {
 
                 case BLOCK_LEFT_SIDE:
                     velX = 0;
-                    rect.x = (int) (rect.getX() - 3);
+                    x = x - 3;
                     isGrounded = false;
                     break;
 

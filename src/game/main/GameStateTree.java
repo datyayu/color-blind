@@ -68,11 +68,12 @@ public class GameStateTree {
     }
 
     public void setSong(AudioClip song) {
-        if (this.song != song) {
+        if (this.song != song || !this.song.isPlaying()) {
+            this.song = song;
+
             Resources.stopAllSounds();
             song.play();
 
-            this.song = song;
         }
     }
 

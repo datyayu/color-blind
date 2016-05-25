@@ -2,11 +2,13 @@ package game.state;
 
 import game.main.GameStateTree;
 import game.model.*;
+import game.model.base.Enemy;
+import game.model.base.IObject;
+import game.model.base.IToken;
 import game.utils.LevelMap;
 import game.main.Main;
 import game.utils.MapManager;
 import game.main.Resources;
-import javafx.scene.media.AudioClip;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,6 +37,7 @@ public abstract class PlayState extends State {
     @Override
     public void init(GameStateTree stateTree) {
         this.stateTree = stateTree;
+
         player = new Player(
                 MapManager.TILE_SIZE * 2,
                 Main.GAME_HEIGHT - (MapManager.TILE_SIZE * 2 + PLAYER_HEIGHT),
@@ -305,6 +308,14 @@ public abstract class PlayState extends State {
 
     }
 
+    @Override
+    public void onKeyRelease(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
+            player.stopMovement();
+        }
+    }
 
     protected void handlePauseKeyPress(int key) {
         switch (key) {
@@ -345,16 +356,6 @@ public abstract class PlayState extends State {
 
             default:
                 break;
-        }
-    }
-
-
-    @Override
-    public void onKeyRelease(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
-            player.stopMovement();
         }
     }
 }

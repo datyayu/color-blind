@@ -1,5 +1,8 @@
 package game.model;
 
+import game.model.base.Enemy;
+import game.model.base.Entity;
+import game.model.base.IObject;
 import game.utils.CollisionType;
 
 import java.awt.*;
@@ -34,6 +37,8 @@ public class Block implements IObject {
     public void render(Graphics g) {
         g.setColor(color);
         g.fillRect((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
+
+        g.setColor(Color.white);
     }
 
     @Override
@@ -53,35 +58,34 @@ public class Block implements IObject {
 
     @Override
     public CollisionType checkForCollisions(Entity entity) {
-        Rectangle playerRect = entity.getRect();
+        Rectangle entityRect = entity.getRect();
         Color entityColor = entity.getType() == "Enemy" ? ((Enemy) entity).getPlayerColor() : entity.getColor();
 
         if (entityColor == color) {
             return CollisionType.NULL;
         }
 
-        if (!playerRect.intersects(rect)) {
+        if (!entityRect.intersects(rect)) {
             return CollisionType.NULL;
         }
 
-
-        // Left hit
-        if ((playerRect.getY() + entity.getHeight() > rect.getY() + 15) &&
-                (playerRect.getX() + entity.getWidth() < rect.getX() + (width/2))) {
+        // Left hit12
+        if ((entityRect.getY() + entityRect.getHeight() > rect.getY() + 15) &&
+                (entityRect.getX() + entityRect.getWidth() < rect.getX() + (rect.getWidth() * 3/4))) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
-        if ((playerRect.getY() + entity.getHeight() > rect.getY() + 15) &&
-                (playerRect.getX() > rect.getX() + (width/2))) {
+        if ((entityRect.getY() + entityRect.getHeight() > rect.getY() + 15) &&
+                (entityRect.getX() > rect.getX() + (rect.getWidth() * 3/4))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }
 
         // Top hit
-        if ((playerRect.getY() < rect.getY()) &&
-                (playerRect.getY() + playerRect.getHeight() <= rect.getY() + rect.getWidth()/2) &&
-                (playerRect.getX() + playerRect.getWidth() > rect.getX()) &&
-                (playerRect.getX() < rect.getX() + width)
+        if ((entityRect.getY() < rect.getY() + 15) &&
+                (entityRect.getY() + entityRect.getHeight() <= rect.getY() + rect.getWidth()/2) &&
+                (entityRect.getX() + entityRect.getWidth() > rect.getX()) &&
+                (entityRect.getX() < rect.getX() + width)
                 ){
             return CollisionType.BLOCK_TOP;
         }

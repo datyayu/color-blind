@@ -3,6 +3,8 @@ package game.model;
 
 import game.animation.FrameAnimation;
 import game.main.Resources;
+import game.model.base.Entity;
+import game.model.base.IObject;
 import game.utils.CollisionType;
 import game.utils.MapManager;
 
@@ -22,7 +24,7 @@ public class Player extends Entity {
     public Player(int x, int y, int width, int height, Color color, int mapHeight) {
         super(x, y, width, height, color);
 
-        this.mapHeight = mapHeight*MapManager.TILE_SIZE;
+        this.mapHeight = mapHeight * MapManager.TILE_SIZE;
 
         isAlive = true;
 
@@ -53,7 +55,7 @@ public class Player extends Entity {
         } else if (velX < 0) {
             runLAnimation.update(delta);
             runRAnimation.reset();
-        } else if (velX > 0){
+        } else if (velX > 0) {
             runRAnimation.update(delta);
             runLAnimation.reset();
         } else {
@@ -97,8 +99,6 @@ public class Player extends Entity {
 
     @Override
     public void checkForCollisions(ArrayList<IObject> objects) {
-        super.checkForCollisions(objects);
-
         for (IObject object : objects) {
             CollisionType collision = object.checkForCollisions(this);
 
@@ -109,10 +109,12 @@ public class Player extends Entity {
                 return;
             }
 
-           if (collision == CollisionType.DEATH) {
-               isAlive = false;
-           }
+            if (collision == CollisionType.DEATH) {
+                isAlive = false;
+            }
         }
+
+        super.checkForCollisions(objects);
     }
 
     public boolean isAlive() {

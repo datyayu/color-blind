@@ -14,11 +14,11 @@ public class GameOverState extends MenuState {
     @Override
     public void init(GameStateTree stateTree) {
         super.init(stateTree);
-        stateTree.setSong(Resources.gameOverSong);
     }
 
     @Override
     public void update(float delta, GameStateTree stateTree) {
+        stateTree.setSong(Resources.gameOverSong);
         super.update(delta, stateTree);
         time += delta*1000L;
     }

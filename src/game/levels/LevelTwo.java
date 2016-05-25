@@ -10,7 +10,6 @@ public class LevelTwo extends PlayState {
     @Override
     public void init(GameStateTree stateTree) {
         map = MapManager.loadMap("level2");
-        stateTree.setSong(Resources.level2Song);
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
@@ -18,6 +17,12 @@ public class LevelTwo extends PlayState {
         );
 
         super.init(stateTree);
+    }
+
+    @Override
+    public void update(float delta, GameStateTree stateTree) {
+        super.update(delta, stateTree);
+        stateTree.setSong(Resources.level2Song);
     }
 
     @Override

@@ -12,8 +12,6 @@ public class LevelThree extends PlayState {
     public void init(GameStateTree stateTree) {
         map = MapManager.loadMap("level3");
 
-        stateTree.setSong(Resources.level3Song);
-
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
@@ -22,6 +20,12 @@ public class LevelThree extends PlayState {
         super.init(stateTree);
     }
 
+
+    @Override
+    public void update(float delta, GameStateTree stateTree) {
+        super.update(delta, stateTree);
+        stateTree.setSong(Resources.level3Song);
+    }
     @Override
     public void onLevelComplete() {
         transitionToState(new GameCompletedState());

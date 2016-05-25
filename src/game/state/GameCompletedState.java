@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class GameCompletedState extends GameOverState {
     @Override
-    public void init(GameStateTree stateTree) {
-        super.init(stateTree);
+    public void update(float delta, GameStateTree stateTree) {
+        super.update(delta, stateTree);
         stateTree.setSong(Resources.menuSong);
     }
 

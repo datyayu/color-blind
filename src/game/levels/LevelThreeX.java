@@ -1,15 +1,17 @@
 package game.levels;
 
 import game.main.GameStateTree;
-import game.state.PlayState;
 import game.main.Resources;
+import game.state.GameCompletedState;
+import game.state.HardPlayState;
+import game.state.PlayState;
 import game.utils.MapManager;
 
 
-public class LevelOne extends PlayState {
+public class LevelThreeX extends HardPlayState {
     @Override
     public void init(GameStateTree stateTree) {
-        map = MapManager.loadMap("level1");
+        map = MapManager.loadMap("level3");
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
@@ -19,19 +21,19 @@ public class LevelOne extends PlayState {
         super.init(stateTree);
     }
 
-    @Override
-     public void update(float delta, GameStateTree stateTree) {
-        super.update(delta, stateTree);
-        stateTree.setSong(Resources.level1Song);
-    }
 
     @Override
+    public void update(float delta, GameStateTree stateTree) {
+        super.update(delta, stateTree);
+        stateTree.setSong(Resources.level3Song);
+    }
+    @Override
     public void onLevelComplete() {
-        transitionToState(new LevelTwo());
+        transitionToState(new GameCompletedState());
     }
 
     @Override
     public void onPlayerDeath() {
-        transitionToState(new LevelOne());
+        transitionToState(new LevelThreeX());
     }
 }

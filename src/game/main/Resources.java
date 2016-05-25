@@ -141,12 +141,6 @@ public class Resources {
         level1Song = loadSound("music/piano-wire.mp3");
         level2Song = loadSound("music/magnetic-moment.mp3");
         level3Song = loadSound("music/sidetracked.mp3");
-
-        menuSong.setCycleCount(AudioClip.INDEFINITE);
-        gameOverSong.setCycleCount(AudioClip.INDEFINITE);
-        level1Song.setCycleCount(AudioClip.INDEFINITE);
-        level2Song.setCycleCount(AudioClip.INDEFINITE);
-        level3Song.setCycleCount(AudioClip.INDEFINITE);
     }
 
     public static void setGlobalVolume(double volume) {

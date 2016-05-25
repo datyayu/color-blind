@@ -3,8 +3,9 @@ package game.utils;
 import game.main.Main;
 import game.model.*;
 import game.main.Resources;
+import game.model.ColorToken;
+import game.model.base.Enemy;
 
-import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class MapManager {
                         break;
 
                     case 'Z':
-                        map.addObject(new Enemy(x*TILE_SIZE, y*TILE_SIZE - TILE_SIZE, 60, 80));
+                        map.addObject(new Zombie(x*TILE_SIZE, y*TILE_SIZE - TILE_SIZE, 60, 80));
                         break;
 
                     default:

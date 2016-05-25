@@ -10,15 +10,21 @@ import game.utils.MapManager;
 public class LevelOneX extends HardPlayState {
     @Override
     public void init(GameStateTree stateTree) {
-        map = MapManager.loadMap("level2");
+        map = MapManager.loadMap("level1");
 
         stateTree.setColorsInventory(
                 Resources.COLOR_GREEN,
                 Resources.COLOR_BLUE
         );
 
-
         super.init(stateTree);
+    }
+
+
+    @Override
+    public void update(float delta, GameStateTree stateTree) {
+        super.update(delta, stateTree);
+        stateTree.setSong(Resources.level1Song);
     }
 
     @Override

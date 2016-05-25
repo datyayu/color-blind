@@ -1,6 +1,9 @@
 package game.model;
 
 import game.main.Resources;
+import game.model.base.Entity;
+import game.model.base.IObject;
+import game.model.base.IToken;
 import game.utils.CollisionType;
 
 import java.awt.*;

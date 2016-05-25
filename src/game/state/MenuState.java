@@ -23,7 +23,6 @@ public class MenuState extends State {
     @Override
     public void init(GameStateTree stateTree) {
         this.stateTree = stateTree;
-        stateTree.setSong(Resources.menuSong);
 
         red_step = RNG.getRandomIntBetween(1, MAX_STEP);
         blue_step = RNG.getRandomIntBetween(1, MAX_STEP);
@@ -38,6 +37,7 @@ public class MenuState extends State {
     @Override
     public void update(float delta, GameStateTree stateTree) {
         this.stateTree = stateTree;
+        stateTree.setSong(Resources.menuSong);
 
         updateBGColors();
     }
