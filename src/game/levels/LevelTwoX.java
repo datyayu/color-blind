@@ -28,7 +28,7 @@ public class LevelTwoX extends HardPlayState {
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new LevelThree());
+        transitionToState(new LevelThreeX());
     }
 
     @Override

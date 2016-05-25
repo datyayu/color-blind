@@ -29,7 +29,7 @@ public class LevelOneX extends HardPlayState {
 
     @Override
     public void onLevelComplete() {
-        transitionToState(new GameOverState());
+        transitionToState(new LevelTwoX());
     }
 
     @Override
