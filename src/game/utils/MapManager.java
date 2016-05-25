@@ -114,6 +114,9 @@ public class MapManager {
                         map.addObject(new Zombie(x*TILE_SIZE, y*TILE_SIZE - TILE_SIZE, 60, 80));
                         break;
 
+                    case 'J':
+                        map.addObject(new JumpingZombie(x*TILE_SIZE, y*TILE_SIZE - TILE_SIZE, 60, 80));
+
                     default:
                         break;
                 }

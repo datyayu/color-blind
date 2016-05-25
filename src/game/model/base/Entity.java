@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public abstract class Entity implements IObject {
     protected static final float GRAVITY_ACCEL = 1800;
-    protected static final int JUMP_VELOCITY = -800;
     protected static final int MAX_STEP = 10;
 
     protected int x;
@@ -16,6 +15,8 @@ public abstract class Entity implements IObject {
     protected int width;
     protected int height;
     protected int MOVEMENT_STEP = 300;
+    protected int JUMP_VELOCITY = -800;
+
 
     protected Rectangle rect;
     protected Color color;

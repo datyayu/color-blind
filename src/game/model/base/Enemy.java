@@ -16,7 +16,7 @@ public abstract class Enemy extends Entity {
     public Enemy(int x, int y, int width, int height) {
         super(x, y, width, height, Resources.COLOR_RED);
 
-        MOVEMENT_STEP = 100;
+        MOVEMENT_STEP = 200;
         bounce = 0;
         moveRight();
     }
