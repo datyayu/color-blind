@@ -43,6 +43,7 @@ public abstract class Entity implements IObject {
         this.isGrounded = false;
 
         rect = new Rectangle();
+        canJump = false;
         updateRects();
     }
 
@@ -53,28 +54,40 @@ public abstract class Entity implements IObject {
 
         lastDirection = velX != 0 ? velX : lastDirection;
 
-        // Jump
+        updateGravity(delta);
+        updatePosition(delta);
+        updateRects();
+
+        isGrounded = false;
+    }
+
+
+    protected void updateGravity(float delta) {
         if (!isGrounded) {
             velY += GRAVITY_ACCEL * delta;
             canJump = false;
         } else {
             velY = 0;
         }
+    }
 
+    protected void updatePosition(float delta) {
+        if (this.getType() == "Enemy") {
+
+
+            System.out.println(velY * delta);
+        }
         float yStep = (velY * delta > MAX_STEP) ? MAX_STEP : velY * delta;
         float xStep = (velX * delta > MAX_STEP) ? MAX_STEP : velX * delta;
 
         y += yStep;
         x += xStep;
-
-        isGrounded = false;
-        updateRects();
     }
-
 
     protected void updateRects() {
         rect.setBounds(x + offsetX, y + offsetY, width, height);
     }
+
 
     public void moveLeft() {
         velX = -MOVEMENT_STEP;
