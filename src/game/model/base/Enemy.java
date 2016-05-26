@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public abstract class Enemy extends Entity {
     protected int bounce;
+    protected boolean isAlive;
     protected Color playerColor;
 
     public Enemy(int x, int y, int width, int height) {
@@ -18,12 +19,15 @@ public abstract class Enemy extends Entity {
 
         MOVEMENT_STEP = 200;
         bounce = 0;
+        isAlive = true;
         moveRight();
     }
 
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
+        if (!isAlive) return;
+
         if (bounce == 1) {
             moveLeft();
             bounce = 0;
@@ -46,7 +50,17 @@ public abstract class Enemy extends Entity {
 
     @Override
     public CollisionType checkForCollisions(Entity entity) {
-        if (color != playerColor && entity.getRect().intersects(rect)) {
+        if (!isAlive) return CollisionType.NULL;
+
+
+        Rectangle entityRect = entity.getRect();
+
+        if (entity.getType() == "Player" && color != playerColor && entityRect.intersects(rect)) {
+            if (entityRect.getMaxY() < rect.getY() + 15) {
+                isAlive = false;
+                return CollisionType.BLOCK_TOP;
+            }
+
             return CollisionType.DEATH;
         }
 

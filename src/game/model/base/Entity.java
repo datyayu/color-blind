@@ -72,11 +72,6 @@ public abstract class Entity implements IObject {
     }
 
     protected void updatePosition(float delta) {
-        if (this.getType() == "Enemy") {
-
-
-            System.out.println(velY * delta);
-        }
         float yStep = (velY * delta > MAX_STEP) ? MAX_STEP : velY * delta;
         float xStep = (velX * delta > MAX_STEP) ? MAX_STEP : velX * delta;
 

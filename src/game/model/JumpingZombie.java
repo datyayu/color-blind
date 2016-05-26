@@ -18,6 +18,8 @@ public class JumpingZombie extends Zombie {
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
+        if (!isAlive) return;
+
         if (isGrounded) {
             jump();
         }

@@ -15,6 +15,8 @@ public class FlyingZombie extends Zombie {
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
+        if (!isAlive) return;
+
         isGrounded = true;
         super.update(delta, offsetX, offsetY);
     }

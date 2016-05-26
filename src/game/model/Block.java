@@ -1,5 +1,6 @@
 package game.model;
 
+import game.main.Resources;
 import game.model.base.Enemy;
 import game.model.base.Entity;
 import game.model.base.IObject;
@@ -71,13 +72,13 @@ public class Block implements IObject {
 
         // Left hit12
         if ((entityRect.getY() + entityRect.getHeight() > rect.getY() + 15) &&
-                (entityRect.getX() + entityRect.getWidth() < rect.getX() + (rect.getWidth() * 3/4))) {
+                (entityRect.getX() + entityRect.getWidth() < rect.getX() + (rect.getWidth() * 2/4))) {
             return CollisionType.BLOCK_LEFT_SIDE;
         }
 
         // Right Hit
-        if ((entityRect.getY() + entityRect.getHeight() > rect.getY() + 15) &&
-                (entityRect.getX() > rect.getX() + (rect.getWidth() * 3/4))) {
+        if ((entityRect.getY() + entityRect.getHeight() > rect.getY() + 10) &&
+                (entityRect.getX() > rect.getX() + (rect.getWidth() * 2/4))) {
             return CollisionType.BLOCK_RIGHT_SIDE;
         }
 

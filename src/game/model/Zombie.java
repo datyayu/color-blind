@@ -21,6 +21,7 @@ public class Zombie extends Enemy {
 
     @Override
     public void update(float delta, int offsetX, int offsetY) {
+        if (!isAlive) return;
         super.update(delta, offsetX, offsetY);
 
         zombieRAnimation.update(delta);
@@ -29,6 +30,7 @@ public class Zombie extends Enemy {
 
     @Override
     public void render(Graphics g) {
+        if (!isAlive) return;
         if (lastDirection < 0) {
             zombieRAnimation.render(g, (int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
         } else {

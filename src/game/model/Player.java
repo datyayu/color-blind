@@ -99,22 +99,29 @@ public class Player extends Entity {
 
     @Override
     public void checkForCollisions(ArrayList<IObject> objects) {
+        super.checkForCollisions(objects);
+
         for (IObject object : objects) {
             CollisionType collision = object.checkForCollisions(this);
 
-            if (justSwitched &&
-                    collision != CollisionType.BLOCK_TOP &&
-                    collision != CollisionType.NULL) {
-                isAlive = false;
-                return;
+            if (justSwitched) {
+                if (collision != CollisionType.NULL)
+                switch (collision) {
+                    case BLOCK_BOTTOM:
+                    case BLOCK_LEFT_SIDE:
+                        x -= MapManager.TILE_SIZE/2;
+                        break;
+
+                    case BLOCK_RIGHT_SIDE:
+                        x += MapManager.TILE_SIZE/2;
+                        break;
+                }
             }
 
             if (collision == CollisionType.DEATH) {
                 isAlive = false;
             }
         }
-
-        super.checkForCollisions(objects);
     }
 
     public boolean isAlive() {
